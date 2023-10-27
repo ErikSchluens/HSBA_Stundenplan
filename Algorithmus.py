@@ -92,9 +92,19 @@ perso_führung = LpConstraint(
 )
 lp +=perso_führung
 
+#only one course per timeslot
+#LPConstraintLE means less or equal and therfore in this case less or equal than one
+for i in range_x:
+    i = LpConstraint(
+        e=lpSum(variables[(i, y)] for y in range_y),
+        sense=LpConstraintLE,
+        name=i,
+        rhs=1)
+    lp += i
+
 
 #solve the problem
-lp.solve()
+lp.solve(PULP_CBC_CMD(msg=0))
 
 # Get the values of the variables
 for x, y in var_keys:
