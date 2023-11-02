@@ -9,7 +9,7 @@ $username = (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) ? $_
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'Test'; // Hier sollte der Name deiner Datenbank stehen
+$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
 $db_port = 8889;
 
 $mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
@@ -24,7 +24,7 @@ if (isset($_POST["submit"])) {
     $password = $_POST["password"];
 
     // Hier findet die Abfrage von dem Username aus der Datenbank statt
-    $stmt = $mysqli->prepare("SELECT * FROM accounts WHERE username = ?");
+    $stmt = $mysqli->prepare("SELECT * FROM LogIn WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
@@ -33,35 +33,39 @@ if (isset($_POST["submit"])) {
 
     // If-Abfrage, ob der User in der Datenbank vorhanden ist, falls nicht, schlägt der Login fehl
     if (empty($result)) {
-        echo "Login fehlgeschlagen";
+        echo "Login fehlgeschlagen1";
     } else {
         // Nun wird das Passwort überprüft
-        $passwordHashed = $result["password"];
+        $passwordHashed = password_hash($result["password"], PASSWORD_BCRYPT);
+
         $checkPassword = password_verify($password, $passwordHashed);
+        /* $testhash = password_hash("Password1" , PASSWORD_BCRYPT);
+         $verifytest = password_verify("Password1", "$testhash");
+         if ($verifytest){
+             echo "Test hat geklappt";
+         } else{
+             echo "Test hat fehlgeschlagen";
+         } */
 
         // Falls das Passwort richtig ist, wird der Benutzer weitergeleitet
         if($checkPassword === true) {
             $user_id = $result['0']['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
-            header("Location:GUI.php");
+            //header("Location:GUI.php");
+            echo "Login erfolgreich";
         } else {
-            echo "Login fehlgeschlagen";
+            echo "Login fehlgeschlagen2";
         }
     }
 }
-// Debugging-Ausgabe
-echo "Eingegebenes Passwort: " . $password . "<br>";
-echo "Gehashtes Passwort aus der Datenbank: " . $passwordHashed . "<br>";
 
-// Passwort überprüfen
-$checkPassword = password_verify($password, $passwordHashed);
-echo "Passwortüberprüfung: " . ($checkPassword ? "Erfolgreich" : "Fehlgeschlagen") . "<br>";
+
 
 // Falls das Passwort falsch ist, speichere eine Fehlermeldung in einer Variablen
 $error_message = "";
 if (!$checkPassword) {
-    $error_message = "Login fehlgeschlagen";
+    $error_message = "Login fehlgeschlagen3";
 }
 
 $mysqli->close(); // Datenbankverbindung schließen
