@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$username', '$dropdown1', '$dropdown2', '$dropdown3', '$dropdown4', '$dropdown5')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Ausgewählte Werte wurden erfolgreich in die Datenbank eingefügt.";
+        echo "Danke, deine Wahl wurde erfolgreich abgegeben.";
     } else {
         echo "Fehler beim Einfügen in die Datenbank: " . $conn->error;
     }
