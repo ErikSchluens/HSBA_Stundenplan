@@ -1,10 +1,11 @@
 from pulp import *
 
 #initialize the problem
-lp = LpProblem("Excursion", LpMaximize)
+lp = LpProblem("Excursion", LpMinimize)
 
 #define variables
 # Define the range for variable pairs
+#These ranges must come from the php code together with the values of the variables
 range_x = range(1, 300)  # number of students in a year
 range_y = range(1, 9)  # Excursions one to nine
 
