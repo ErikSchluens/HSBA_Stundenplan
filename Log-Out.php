@@ -10,7 +10,7 @@ Du wurdest erfolgreich abgemeldet. <br><br>
 Logge Dich erneut ein, um weitere Stundenpläne zu erstellen oder alte Projekte zu verwalten. <br><br>
 <!-- Der Button, der zur Hompage verweist. -->
 <div>
-    <a href="Stundenplan.php"> zur Homepage</a>
+    <a href="GUI.php"> zur Homepage</a>
 </div>
 </body>
 <!-- Hier wird auf den Footer zugegriffen. -->
