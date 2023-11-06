@@ -52,8 +52,7 @@ if (isset($_POST["submit"])) {
             $user_id = $result['0']['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
-            //header("Location:GUI.php");
-            echo "Login erfolgreich";
+            header("Location:GUI.php");
         } else {
             echo "Login fehlgeschlagen2";
         }
