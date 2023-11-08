@@ -62,7 +62,7 @@ var_dump($_SESSION);
 ?>
 
     <title>Exkursion</title>
-    <h2 style="margin: 0.5%">Exkursion wählen</h2>
+    <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
 
         <h5 style="margin-left: 2.2%; margin-top: 5%">Verfügbare Städte</h5>
             <table>
