@@ -6,8 +6,8 @@
 
         <div class="btn-group btn-group-lg">
             <div class="text1"><a href="Stundenplan.php">+</a></div>
-            <div class="text1"><a href="#">+</a></div>
-            <div class="text2"><a href="#">+</a></div>
+            <div class="text1"><a href="Excursion.php">+</a></div>
+            <div class="text2"><a href="WBÜ.php">+</a></div>
         </div>
 
             <p1 class="p1">Stundenplan erstellen</p1>
