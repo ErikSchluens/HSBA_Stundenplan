@@ -131,5 +131,5 @@ var_dump($_SESSION);
         <input type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: -14%; margin-left: 75%">
     </form>
 
-            <div style="height: 500px; width: 100%;"></div>
+            <div style="height: 250px; width: 100%;"></div>
 <?php include_once('footer.php')?>
