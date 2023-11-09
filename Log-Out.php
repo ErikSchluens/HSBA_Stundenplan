@@ -7,7 +7,7 @@
 
 Vielen Dank für deinen Besuch.  <br><br><br>
 Du wurdest erfolgreich abgemeldet. <br><br>
-Logge Dich erneut ein, um weitere Stundenpläne zu erstellen oder alte Projekte zu verwalten. <br><br>
+<a href="Login.php">Logge Dich erneut ein</a>, um weitere Stundenpläne zu erstellen oder alte Projekte zu verwalten. <br><br>
 <!-- Der Button, der zur Hompage verweist. -->
 <div>
     <a href="GUI.php"> zur Homepage</a>
