@@ -2,7 +2,7 @@
     include_once ('header.php');
 ?>
         <title>Startseite</title>
-        <h2 style="margin: 0.5%">Willkommen, <?php ?></h2>
+        <h2 style="margin: 0.5%">Willkommen, <?php echo $username ?></h2>
 
         <div class="btn-group btn-group-lg">
             <div class="text1"><a href="Stundenplan.php">+</a></div>
