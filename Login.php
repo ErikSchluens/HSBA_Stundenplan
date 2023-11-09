@@ -39,13 +39,6 @@ if (isset($_POST["submit"])) {
         $passwordHashed = password_hash($result["password"], PASSWORD_BCRYPT);
 
         $checkPassword = password_verify($password, $passwordHashed);
-        /* $testhash = password_hash("Password1" , PASSWORD_BCRYPT);
-         $verifytest = password_verify("Password1", "$testhash");
-         if ($verifytest){
-             echo "Test hat geklappt";
-         } else{
-             echo "Test hat fehlgeschlagen";
-         } */
 
         // Falls das Passwort richtig ist, wird der Benutzer weitergeleitet
         if($checkPassword === true) {
