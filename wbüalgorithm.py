@@ -34,9 +34,6 @@ for row in results:
   wahl5 = row['wahl5']
   print ('%s | %s | %s | %s | %s | %s | %s ' % (id, name, wahl1, wahl2, wahl3, wahl4, wahl5))
 
-#close the connection 
-cnx.close()
-
 
 #initialize the problem
 lp = LpProblem("Excursion", LpMinimize)
@@ -89,4 +86,18 @@ for x, y in var_keys:
 # Get the optimal objective value
 optimal_value = value(lp.objective)
 print(f'Optimal objective value = {optimal_value}')
+
+# Use a parameterized query to insert the otimal_value into the database
+insert_query = "INSERT INTO `WBÜ_Output` (test) VALUES (%s)"
+data_to_insert = (optimal_value,)
+
+# Execute the query
+cursor.execute(insert_query, data_to_insert)
+
+#commit the changes to the database
+cnx.commit()
+
+#close the Databse connection
+cnx.close()
+
 
