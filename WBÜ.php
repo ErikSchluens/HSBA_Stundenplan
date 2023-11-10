@@ -45,16 +45,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dropdown4 = $_POST["dropdown4"];
     $dropdown5 = $_POST["dropdown5"];
 
+    // Check if the username already exists in the table
+    $checkQuery = "SELECT * FROM WBÜ_Input WHERE username = ?";
+    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt->bind_param("s", $username);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        // Update existing record if the username already exists
+        $updateQuery = "UPDATE WBÜ_Input SET wahl1=?, wahl2=?, wahl3=?, wahl4=?, wahl5=? WHERE username=?";
+        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $username);
+
+        if ($updateStmt->execute()) {
+            echo "Data updated successfully";
+        } else {
+            echo "Error updating data: " . $updateStmt->error;
+        }
+        $updateStmt->close();
+        } else {
+            // Insert a new record if the username doesn't exist
+            $insertQuery = "INSERT INTO WBÜ_Input (username, wahl1, wahl2, wahl3, wahl4, wahl5) VALUES (?, ?, ?, ?, ?, ?)";
+            $insertStmt = $conn->prepare($insertQuery);
+            $insertStmt->bind_param("ssssss", $username, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
+
+            if ($insertStmt->execute()) {
+                echo "Data inserted successfully";
+            } else {
+                echo "Error inserting data: " . $insertStmt->error;
+            }
+
+            $insertStmt->close();
+        }
+
 
     // SQL-Befehle, um die Werte in die Datenbanktabelle zu schreiben
     $sql1 = "INSERT INTO WBÜ_Input (username, wahl1, wahl2, wahl3, wahl4, wahl5) VALUES ('$username' , '$dropdown1', '$dropdown2',
                                                                                         '$dropdown3', '$dropdown4', '$dropdown5')";
 
-    if ($conn->query($sql1) === TRUE) {
+  /*  if ($conn->query($sql1) === TRUE) {
         echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Danke für deine Wahl" . "</p>";
     } else {
         echo "Fehler beim Einfügen in die Datenbank: " . $conn->error;
-    }
+    } */
 }
     ?>
     <title>WBÜ</title>
