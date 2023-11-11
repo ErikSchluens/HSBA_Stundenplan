@@ -1,5 +1,4 @@
 from pulp import *
-from pulp import *
 import mysql.connector
 
 #configurize the connection to the local database
@@ -23,6 +22,9 @@ cursor.execute('SELECT * FROM `WBÜ_Input`')
 #fetch all the results from the query above
 results = cursor.fetchall()
 
+#define a variable that counts the number of students
+numberofstudents = 0
+
 #display the data with a for loop
 for row in results:
   id = row['num']
@@ -33,16 +35,17 @@ for row in results:
   wahl4 = row['wahl4']
   wahl5 = row['wahl5']
   print ('%s | %s | %s | %s | %s | %s | %s ' % (id, name, wahl1, wahl2, wahl3, wahl4, wahl5))
+  numberofstudents +=1 #momentan wird jeder eintrag gezählt, wir brauchen noch etwas, dass sicherstellt, dass nur ein Eintrag pro Account vorhanden ist
 
+print(numberofstudents)
 
 #initialize the problem
-lp = LpProblem("Excursion", LpMinimize)
+lp = LpProblem("WBU", LpMinimize)
 
 #define variables
 # Define the range for variable pairs
-#These ranges must come from the php code together with the values of the variables
-range_x = range(1, 300)  # number of students in a year
-range_y = range(1, 9)  # Excursions one to nine
+range_x = range(1, numberofstudents+1)  # Amount of students
+range_y = range(1, 6)  # Courses 1 bis 5
 
 # Initialize an empty list to store variable pairs
 var_keys = []
@@ -51,7 +54,7 @@ var_keys = []
 for x in range_x:
     for y in range_y:
         var_keys.append((x, y))
-x = LpVariable.dicts("Student", var_keys, lowBound=0, upBound=1, cat="Integer")
+x = LpVariable.dicts("Schüler", var_keys, lowBound=0, upBound=1, cat="Integer")
 
 # Create a dictionary to hold the PuLP variables
 variables = {}
@@ -59,14 +62,14 @@ for x, y in var_keys:
     variables[(x, y)] = LpVariable(f'x_{x}_{y}', cat=LpBinary)
 
 # Sum all the PuLP variables using lpSum
-#Before calculating the sum we must assign the values to each variavle
 sum_of_variables = lpSum(variables[(x, y)] for x, y in var_keys)
 
 #add the objective function
 lp += sum_of_variables
 
 #add the constraints
-#a student can only choose one excursion and must be in one excursion
+#only one course per timeslot
+
 for i in range_x:
     i = LpConstraint(
         e=lpSum(variables[(i, y)] for y in range_y),
@@ -82,22 +85,24 @@ lp.solve(PULP_CBC_CMD(msg=0))
 # Get the values of the variables
 for x, y in var_keys:
     print(f'x_{x}_{y} = {variables[(x, y)].varValue}')
+    '''
+    insertion = "INSERT INTO `WBÜ_Output` (variable, wert) VALUES (%s, %s)"
+    data = (f'x_{x}_{y}', f'{variables[(x, y)].varValue}', )
+    cursor.execute(insertion, data)
+    '''
 
 # Get the optimal objective value
 optimal_value = value(lp.objective)
 print(f'Optimal objective value = {optimal_value}')
 
 # Use a parameterized query to insert the otimal_value into the database
-insert_query = "INSERT INTO `WBÜ_Output` (test) VALUES (%s)"
-data_to_insert = (optimal_value,)
+insert_query = "INSERT INTO `WBÜ_Output` (variable, wert) VALUES (%s, %s)"
+data_to_insert = ("Gesamtanzahl", optimal_value,)
 
 # Execute the query
-cursor.execute(insert_query, data_to_insert)
+#cursor.execute(insert_query, data_to_insert)
 
-#commit the changes to the database
 cnx.commit()
 
 #close the Databse connection
 cnx.close()
-
-
