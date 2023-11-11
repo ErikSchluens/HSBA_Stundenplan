@@ -23,8 +23,9 @@
             background-color: #ffffff;
         }
     </style>
-<?php
 
+
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = '127.0.0.1';
     $db_user = 'root';
@@ -97,10 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Kommunikation</td></tr>
     </table>
 
-    <form method="post" style="margin-left: 10%">
+    <form method="post" style="margin-left: 10%" onsubmit="return validateForm()">
 
         <div style="margin-left: 10%; margin-top: -14%; position: absolute">Wahl 1</div>
-        <select name="dropdown1" style="position: absolute; margin-left: 10%;margin-top: -12%">
+        <select name="dropdown1" id="dropdown1" onchange="showDropdown(1)" style="position: absolute; margin-left: 10%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
             <option value="spanisch">Spanisch</option>
             <option value="selfempowerment">Selfempowerment</option>
@@ -110,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
 
         <div style="margin-left: 22%; margin-top: -14%; position: absolute">Wahl 2</div>
-        <select name="dropdown2" style="position: absolute; margin-left: 22%;margin-top: -12%">
+        <select name="dropdown2" id="dropdown2" style="position: absolute; margin-left: 22%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
             <option value="spanisch">Spanisch</option>
             <option value="selfempowerment">Selfempowerment</option>
@@ -120,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
 
         <div style="margin-left: 34%; margin-top: -14%; position: absolute">Wahl 3</div>
-        <select name="dropdown3" style="position: absolute; margin-left: 34%;margin-top: -12%">
+        <select name="dropdown3" id="dropdown3" style="position: absolute; margin-left: 34%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
             <option value="spanisch">Spanisch</option>
             <option value="selfempowerment">Selfempowerment</option>
@@ -130,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
 
         <div style="margin-left: 46%; margin-top: -14%; position: absolute">Wahl 4</div>
-        <select name="dropdown4" style="position: absolute; margin-left: 46%;margin-top: -12%">
+        <select name="dropdown4" id="dropdown4" style="position: absolute; margin-left: 46%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
             <option value="spanisch">Spanisch</option>
             <option value="selfempowerment">Selfempowerment</option>
@@ -140,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
 
         <div style="margin-left: 58%; margin-top: -14%; position: absolute">Wahl 5</div>
-        <select name="dropdown5" style="position: absolute; margin-left: 58%;margin-top: -12%">
+        <select name="dropdown5" id="dropdown5" style="position: absolute; margin-left: 58%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
             <option value="spanisch">Spanisch</option>
             <option value="selfempowerment">Selfempowerment</option>
