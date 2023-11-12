@@ -1,138 +1,104 @@
-<?php include_once ('header.php') ?>
-    <style>
-        table {
-            width: 15%;
-            border-collapse: collapse;
-            margin-left: 2%;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(odd) {
-            background-color: #ffffff;
-        }
-    </style>
 <?php
+// Session wird gestart und Username, sowie User_id werden in der Session gespeichert
+session_start();
+$username = (isset($_SESSION['username'])) ? $_SESSION['username'] : null;
+$user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : null;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $db_host = '127.0.0.1';
-    $db_user = 'root';
-    $db_password = 'root';
-    $db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
-    $db_port = 8889;
-
-    // Verbindung zur Datenbank herstellen
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-    if ($conn->connect_error) {
-        die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
-    }
-
-    $dropdown1 = $_POST["dropdown1"];
-    $dropdown2 = $_POST["dropdown2"];
-    $dropdown3 = $_POST["dropdown3"];
-    $dropdown4 = $_POST["dropdown4"];
-    $dropdown5 = $_POST["dropdown5"];
-
-    // SQL-Query, um die ausgewählten Werte in die Datenbank einzufügen
-    $sql = "INSERT INTO Excursion_Input (username, 1Wahl, 2Wahl, 3Wahl, 4Wahl, 5Wahl) 
-            VALUES ('$username', '$dropdown1', '$dropdown2', '$dropdown3', '$dropdown4', '$dropdown5')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<p style='position: absolute;margin-left: 42%;margin-top: 10%;'>" . "Danke für deine Wahl" . "</p>";
-    } else {
-        echo "Fehler beim Einfügen in die Datenbank: " . $conn->error;
-    }
-
-    // Datenbankverbindung schließen
-    $conn->close();
-}
 ?>
 
-    <title>Exkursion</title>
-    <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
+<html>
+<head>
+    <!-- Einbindung der Navbar, der CSS Datei und der Schriftarten -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Bindet die Funktion an das 'change'-Event aller Select-Elemente
+            $('select').on('change', function() {
+                var selectedValue = $(this).val(); // Holt den Wert des ausgewählten Options
 
-    <h5 style="margin-left: 2.2%; margin-top: 5%">Verfügbare Städte</h5>
-    <table>
-        <th>Städte</th>
-        <tr><td>Hamburg</td></tr>
-        <tr><td>Lissabon</td></tr>
-        <tr><td>Athen</td></tr>
-        <tr><td>Bilbao</td></tr>
-        <tr><td>Bordeux</td></tr>
-        <tr><td>Limassol</td></tr>
-    </table>
+                // Deaktiviert die ausgewählte Option in allen anderen Select-Elementen
+                $('select').not(this).find('option[value="' + selectedValue + '"]').prop('disabled', true);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#dropdown2').hide();
+            $('#dropdown3').hide();
+            $('#dropdown4').hide();
+            $('#dropdown5').hide();
 
+            $('#dropdown1').change(function(){
+                if($(this).val() !== ''){
+                    $('#dropdown2').show();
+                } else {
+                    $('#dropdown2').hide();
+                    $('#dropdown3').hide();
+                    $('#dropdown4').hide();
+                    $('#dropdown5').hide();
+                }
+            });
 
-    <form method="post" style="margin-left: 10%">
+            $('#dropdown2').change(function(){
+                if($(this).val() !== ''){
+                    $('#dropdown3').show();
+                } else {
+                    $('#dropdown3').hide();
+                    $('#dropdown4').hide();
+                    $('#dropdown5').hide();
+                }
+            });
 
-        <div style="margin-left: 10%; margin-top: -14%; position: absolute">1. Wahl</div>
-        <select name="dropdown1" id="dropdown1" onchange="showDropdown(1)" style="position: absolute; margin-left: 10%;margin-top: -12%">
-            <option value="">Keine Stadt ausgewählt</option>
-            <option value="Hamburg">Hamburg</option>
-            <option value="Lissabon">Lissabon</option>
-            <option value="Athen">Athen</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
-            <option value="Limassol">Limassol</option>
-        </select>
+            $('#dropdown3').change(function(){
+                if($(this).val() !== ''){
+                    $('#dropdown4').show();
+                } else {
+                    $('#dropdown4').hide();
+                    $('#dropdown5').hide();
+                }
+            });
 
-        <div style="margin-left: 23%; margin-top: -14%; position: absolute">2. Wahl</div>
-        <select name="dropdown2" id="dropdown2" style="position: absolute; margin-left: 23%;margin-top: -12%">
-            <option value="">Keine Stadt ausgewählt</option>
-            <option value="Hamburg">Hamburg</option>
-            <option value="Lissabon">Lissabon</option>
-            <option value="Athen">Athen</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
-            <option value="Limassol">Limassol</option>
-        </select>
+            $('#dropdown4').change(function(){
+                if($(this).val() !== ''){
+                    $('#dropdown5').show();
+                } else {
+                    $('#dropdown5').hide();
+                }
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="GUI.css">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<nav class="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="color: white; font-size: 30px;" href="#">HSBA</a>
+        <button class="navbar-toggler" type="button" style="background-color: white" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="background-color: white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" style="color: white" href="GUI.php">Home</a>
+                <a class="nav-link" style="color: white" href="Stundenplan.php">Stundenplan</a>
 
-        <div style="margin-left: 35.5%; margin-top: -14%; position: absolute">3. Wahl</div>
-        <select name="dropdown3" id="dropdown3" style="position: absolute; margin-left: 35.5%;margin-top: -12%">
-            <option value="">Keine Stadt ausgewählt</option>
-            <option value="Hamburg">Hamburg</option>
-            <option value="Lissabon">Lissabon</option>
-            <option value="Athen">Athen</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
-            <option value="Limassol">Limassol</option>
-        </select>
-
-        <div style="margin-left: 48%; margin-top: -14%; position: absolute">4. Wahl</div>
-        <select name="dropdown4" id="dropdown4" style="position: absolute; margin-left: 48%;margin-top: -12%">
-            <option value="">Keine Stadt ausgewählt</option>
-            <option value="Hamburg">Hamburg</option>
-            <option value="Lissabon">Lissabon</option>
-            <option value="Athen">Athen</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
-            <option value="Limassol">Limassol</option>
-        </select>
-
-        <div style="margin-left: 60.5%; margin-top: -14%; position: absolute">5. Wahl</div>
-        <select name="dropdown5" id="dropdown5" style="position: absolute; margin-left: 60.5%;margin-top: -12%">
-            <option value="">Keine Stadt ausgewählt</option>
-            <option value="Hamburg">Hamburg</option>
-            <option value="Lissabon">Lissabon</option>
-            <option value="Athen">Athen</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
-            <option value="Limassol">Limassol</option>
-        </select>
-
-        <input type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: -14%; margin-left: 81%">
-    </form>
-
-    <div style="height: 250px; width: 100%;"></div>
-<?php include_once('footer.php')?>
+                <?php
+                if ($username) {
+                    ?>
+                    <a class="nav-link" style="color: white" href="#">Profil</a>
+                    <a class="nav-link" style="color: white" href="Logout.php">Logout</a>
+                    <?php
+                } else {
+                    ?>
+                    <a class="nav-link" style="color: white" href="Login.php">Login</a>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</nav>
