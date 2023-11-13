@@ -42,7 +42,7 @@ if (isset($_POST["submit"])) {
 
         // Falls das Passwort richtig ist, wird der Benutzer weitergeleitet
         if($checkPassword === true) {
-            $user_id = $result['0']['user_id'];
+            $user_id = $result['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
             header("Location:GUI.php");
