@@ -27,9 +27,6 @@ if (in_array($_SESSION['user_id'], $allowed_user_ids)) {
     // Display content for user group 1 to 21
     echo '<div class="new-div"><a href="#">TBD</a></div>';
 }
-else {
-    echo '<div class="text1"><a href="#">TBD</a></div>';
-}
 ?>
 
         </body>
