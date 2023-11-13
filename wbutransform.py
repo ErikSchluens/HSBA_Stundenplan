@@ -14,11 +14,17 @@ cnx = mysql.connector.connect(**config)
 #create a cursor that interacts with the databse
 cursor = cnx.cursor(dictionary=True)
 
+#delete old data from transfer table
+cursor.execute('Delete FROM `WBÜ_zwischentabelle`')
+cnx.commit()
+
 #execute a select query from the WBÜ_Input Table
 cursor.execute('SELECT * FROM `WBÜ_Input`')
 
 #fetch all the results from the query above
 results = cursor.fetchall()
+
+
 
 # Insert data into the new table
 for row in results:
@@ -46,15 +52,11 @@ for row in results:
                 presentation_skills = i
 
 
-    #execute a query which inserts the values into the database. if the primary key (username) is already existing the values will be updated
+    #execute a query which inserts the values into the database
     cursor.execute('''
         INSERT INTO WBÜ_zwischentabelle (
             num, username, spanisch, kommunikation, verhandlungsführung, selfempowerment, presentation_skills
         ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-        ON DUPLICATE KEY UPDATE
-            num=VALUES(num), spanisch=VALUES(spanisch),
-            kommunikation=VALUES(kommunikation), verhandlungsführung=VALUES(verhandlungsführung),
-            selfempowerment=VALUES(selfempowerment), presentation_skills=VALUES(presentation_skills)
     ''', (num, username, spanisch, kommunikation, verhandlungsführung, selfempowerment, presentation_skills))
 
 # Commit the changes and close the connection
