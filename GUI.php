@@ -1,15 +1,16 @@
 <?php
-    include_once ('header.php');
+include_once ('header.php');
 ?>
-        <title>Startseite</title>
-        <h2 style="margin: 0.5%">Willkommen, <?php echo $username ?></h2>
+<title>Startseite</title>
+<div><img src='User.png' alt='Userimage' style='width:50px;height:50px; margin: 0.8%;'></div>
+<div style="margin-left: 6%; margin-top: -4.3%"><h2>Willkommen, <?php echo $username ?></h2></div>
 
 <?php
 if ($_SESSION['user_id'] == 24) {
     // Display content for user group 24 (Students)
     echo '<div class="btn-group btn-group-lg">';
-    echo '<div class="text1"><a href="Excursion.php">+</a></div>';
-    echo '<div class="text2"><a href="WBÜ.php">+</a></div>';
+    echo '<div class="text1"><a href="Excursion.php" class="plus">+</a></div>';
+    echo '<div class="text2"><a href="WBÜ.php" class="plus">+</a></div>';
     echo '</div>';
     echo '<p1 class="p2">Exkursionszuordnung</p1>';
     echo '<p1 class="p3">WBÜ Zuordnung</p1>';
@@ -29,8 +30,8 @@ if (in_array($_SESSION['user_id'], $allowed_user_ids)) {
 }
 ?>
 
-        </body>
-        <div style="height: 170px;"></div>
+</body>
+<div style="height: 170px;"></div>
 
 <?php
 include_once('footer.php');

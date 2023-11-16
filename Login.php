@@ -9,7 +9,7 @@ $username = (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) ? $_
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
+$db_db = 'TimeTableknowledge'; // Hier sollte der Name deiner Datenbank stehen
 $db_port = 8889;
 
 $mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
@@ -66,19 +66,18 @@ $mysqli->close(); // Datenbankverbindung schließen
 
 <!-- Rest des HTML-Codes -->
 <title>Login</title>
-<h2 style="text-align: center;padding: 2%">Kennen wir uns?</h2>
+<div style="text-align: center"><img src='HSBA_Logo_Lang.jpg' alt='HSBA Logo' style='width: 750px; height:200px; margin-top: 2%; margin-bottom: 4%'></div>
 <form style="text-align: center" method="POST" action="Login.php">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="text" name="username" style="width: 40%;margin-left: 30%" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <div>
+        <label for="exampleInputEmail1">Username</label>
+        <input type="text" name="username" style="width: 40%;margin-left: 30%" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username">
     </div>
-    <div class="form-group">
+    <div style="margin-top: 2%; margin-bottom: 2%">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" name="password" style="width: 40%;margin-left: 30%" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="password" name="password" style="width: 40%;margin-left: 30%" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
     </div>
     <button type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: 1%">Login</button>
 </form>
-<div style="height: 36.5%;width: 100%"></div>
+<div style="height: 15%;width: 100%"></div>
 
 <?php include_once('footer.php'); ?>
