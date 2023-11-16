@@ -6,7 +6,7 @@
     position: center;
     background-color: lightslategrey;
     border-radius: 15px;
-    margin-left: 10%;
+    margin-left: 20%;
     padding: 6%;
     color: white;
     height: 200px;
@@ -18,7 +18,7 @@
     position: center;
     background-color: lightslategrey;
     border-radius: 15px;
-    margin-left: 10%;
+    margin-left: 20%;
     margin-right: -9%;
     padding: 6%;
     color: white;
@@ -26,17 +26,31 @@
     width: 400px;
     font-size: 30px;
 }
+
 .btn-group {
     text-align: center;
     margin-top: 10%;
 }
-a {
+a.plus {
     text-decoration: none;
     color: black;
 }
-a:hover {
+a.plus:hover {
     color: white;
 }
+
+a.textlink:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a.textlink:hover {
+    color: #032d57;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
 .p1 {
     text-align: left;
     margin-left: 13%;
