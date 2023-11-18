@@ -1,25 +1,30 @@
 .navbar {
     background-color: #032d57;
 }
-.text1 {
+
+.homepage_optioncontainer {
+    height: 250px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.excursion_option {
     box-sizing: border-box;
-    position: center;
-    background-color: lightslategrey;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(3, 45, 87, 0.27);
     border-radius: 15px;
-    margin-left: 20%;
-    padding: 6%;
-    color: white;
     height: 200px;
     width: 400px;
     font-size: 30px;
+    margin-bottom: 4%;
 }
-.text2 {
+.wbu_option {
     box-sizing: border-box;
     position: center;
-    background-color: lightslategrey;
+    background-color: rgba(3, 45, 87, 0.27);
     border-radius: 15px;
-    margin-left: 20%;
-    margin-right: -9%;
     padding: 6%;
     color: white;
     height: 200px;
@@ -31,12 +36,24 @@
     text-align: center;
     margin-top: 10%;
 }
-a.plus {
+a.plus:link {
+    justify-content: space-around;
+    align-items: center;
     text-decoration: none;
     color: black;
 }
 a.plus:hover {
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
     color: white;
+}
+
+a.plus:visited {
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    color: black;
 }
 
 a.textlink:link {
@@ -49,6 +66,12 @@ a.textlink:hover {
     color: #032d57;
     background-color: transparent;
     text-decoration: underline;
+}
+
+a.textlink:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
 }
 
 .p1 {
@@ -72,4 +95,43 @@ a.textlink:hover {
     width: 100%;
     background-color: #032d57;
     color: white;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-container .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(3, 45, 87, 0.27);
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-top: -18px; /* Halbe Höhe des Tooltips für die zentrierte Ausrichtung */
+    margin-left: 16px; /* Abstand zum Bild */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container .tooltip::before {
+    content: "";
+    position: absolute;
+    top: 13.1%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #000000;
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
 }
