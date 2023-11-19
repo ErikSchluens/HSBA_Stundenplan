@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Lissabon</td></tr>
         <tr><td>Athen</td></tr>
         <tr><td>Bilbao</td></tr>
-        <tr><td>Bordeux</td></tr>
+        <tr><td>Bordeaux</td></tr>
         <tr><td>Limassol</td></tr>
     </table>
 
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
