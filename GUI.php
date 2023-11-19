@@ -17,7 +17,7 @@ include_once ('header.php');
 if ($_SESSION['user_id'] ==null ) {
     header('Location:Login.php');
 }
-if ($_SESSION['user_id'] > 24) {
+if ($_SESSION['user_id'] >= 24) {
     // Display content for user group 24 and bigger (Students)
     echo '<div class="btn-group btn-group-lg"></div>';
     echo '<div class="homepage_optioncontainer">
