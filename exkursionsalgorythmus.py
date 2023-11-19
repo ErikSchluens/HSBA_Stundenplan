@@ -1,5 +1,4 @@
 from pulp import *
-from pulp import *
 import mysql.connector
 
 #configurize the connection to the local database
@@ -18,76 +17,76 @@ cnx = mysql.connector.connect(**config)
 cursor = cnx.cursor(dictionary=True)
 
 #execute a select query from the WBÜ_Input Table
-cursor.execute('SELECT * FROM `WBÜ_Input`')
+cursor.execute('SELECT * FROM `Excursion_Zwischentabelle`')
 
 #fetch all the results from the query above
-results = cursor.fetchall()
+data_from_db = cursor.fetchall()
 
-#display the data with a for loop
-for row in results:
-  id = row['num']
-  name = row['username']
-  wahl1 = row['wahl1']
-  wahl2 = row['wahl2']
-  wahl3 = row['wahl3']
-  wahl4 = row['wahl4']
-  wahl5 = row['wahl5']
-  print ('%s | %s | %s | %s | %s | %s | %s ' % (id, name, wahl1, wahl2, wahl3, wahl4, wahl5))
+#delete old data from output table
+cursor.execute('Delete FROM `Excursion_Output`')
+cnx.commit()
 
-#close the connection 
-cnx.close()
+for row in data_from_db:
+    print(row)
 
 
-#initialize the problem
-lp = LpProblem("Excursion", LpMinimize)
+#transform data into a list
+results = [[row['num'], row['username'], row['Hamburg'], row['Lissabon'], row['Athen'],
+            row['Bilbao'], row['Bordeaux'] , row['Limassol']] for row in data_from_db]
 
-#define variables
-# Define the range for variable pairs
-#These ranges must come from the php code together with the values of the variables
-range_x = range(1, 300)  # number of students in a year
-range_y = range(1, 9)  # Excursions one to nine
+results_dict = {index: row[0] for index, row in enumerate(results)}
 
-# Initialize an empty list to store variable pairs
-var_keys = []
+# Create a PuLP minimization problem
+prob = LpProblem("excursion_optimisation", LpMinimize)
 
-# Loop through the ranges to generate variable pairs
-for x in range_x:
-    for y in range_y:
-        var_keys.append((x, y))
-x = LpVariable.dicts("Student", var_keys, lowBound=0, upBound=1, cat="Integer")
+# Create decision variables Xij
+rows = len(results)
+cols = len(results[0]) - 2  # Exclude the first two columns
+X = [[LpVariable(f"X{i}{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
 
-# Create a dictionary to hold the PuLP variables
-variables = {}
-for x, y in var_keys:
-    variables[(x, y)] = LpVariable(f'x_{x}_{y}', cat=LpBinary)
+# Create the objective function
+objective_function = lpSum(results[i][j + 2] * X[i][j] for i in range(rows) for j in range(cols))
+prob += objective_function
 
-# Sum all the PuLP variables using lpSum
-#Before calculating the sum we must assign the values to each variavle
-sum_of_variables = lpSum(variables[(x, y)] for x, y in var_keys)
+# Now add all the constraints
+#Maximum of 20 students in each excursion
+for y in range(cols):
+    y = LpConstraint(
+        e=lpSum(X[i][y] for i in range(rows)),
+        sense=LpConstraintLE,
+        name=f'20studentsper{y}',
+        rhs=2)
 
-#add the objective function
-lp += sum_of_variables
 
-#add the constraints
-#a student can only choose one excursion and must be in one excursion
-for i in range_x:
+
+#one excursion per Student
+for i in range(rows):
     i = LpConstraint(
-        e=lpSum(variables[(i, y)] for y in range_y),
+        e=lpSum(X[i][y] for y in range(cols)),
         sense=LpConstraintEQ,
-        name=i,
+        name=f'Singelexcursion{i}',
         rhs=1)
-    lp += i
+    prob += i
 
 
-#solve the problem
-lp.solve(PULP_CBC_CMD(msg=0))
 
-# Get the values of the variables
-for x, y in var_keys:
-    print(f'x_{x}_{y} = {variables[(x, y)].varValue}')
-
-# Get the optimal objective value
-optimal_value = value(lp.objective)
-print(f'Optimal objective value = {optimal_value}')
+# Solve the problem
+prob.solve()
 
 
+# Print the results
+print("Status:", prob.status)
+print("Optimal values:")
+for var in prob.variables():
+    print(f"{var.name} = {var.varValue}")
+    insertion = "INSERT INTO `Excursion_Output` (variable, wert) VALUES (%s, %s)"
+    data = (f'{var.name}', f'{var.varValue}', )
+    cursor.execute(insertion, data)
+
+print("Optimal Objective Function Value:", prob.objective.value())
+
+# Execute the query
+cnx.commit()
+
+#close the Databse connection
+cnx.close()
