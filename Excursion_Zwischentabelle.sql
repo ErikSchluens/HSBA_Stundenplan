@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Erstellungszeit: 19. Nov 2023 um 13:56
+-- Erstellungszeit: 19. Nov 2023 um 14:42
 -- Server-Version: 5.7.39
 -- PHP-Version: 7.4.33
 
@@ -35,8 +35,17 @@ CREATE TABLE `Excursion_Zwischentabelle` (
   `Athen` int(11) NOT NULL DEFAULT '10',
   `Bilbao` int(11) NOT NULL DEFAULT '10',
   `Bordeaux` int(11) NOT NULL DEFAULT '0',
-  `Limasol` int(11) NOT NULL DEFAULT '0'
+  `Limassol` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `Excursion_Zwischentabelle`
+--
+
+INSERT INTO `Excursion_Zwischentabelle` (`num`, `username`, `Hamburg`, `Lissabon`, `Athen`, `Bilbao`, `Bordeaux`, `Limassol`) VALUES
+(1, 'Karstens.HSBA', 10, 1, 2, 3, 4, 10),
+(2, 'Student1', 4, 1, 2, 5, 10, 3),
+(3, 'Student2', 10, 2, 1, 10, 10, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
