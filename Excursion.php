@@ -23,6 +23,10 @@
         }
     </style>
 <?php
+//if you´re not login you will be redirected to the Login page
+if ($_SESSION['user_id'] ==null ) {
+    header('Location:Login.php');
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = '127.0.0.1';
