@@ -1,3 +1,8 @@
+.body_box {
+    height: fit-content;
+    min-height: 840px;
+}
+
 .navbar {
     background-color: #032d57;
 }
@@ -7,6 +12,8 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .excursion_option {
@@ -91,7 +98,10 @@ a.textlink:visited {
 }
 
 .footer {
-    height: 220px;
+    position: absolute;
+    margin-bottom: 0;
+    height: fit-content;
+    min-height: 200px;
     width: 100%;
     background-color: #032d57;
     color: white;
@@ -134,4 +144,18 @@ a.textlink:visited {
 .tooltip-container:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.constraint_box {
+    padding: 1%;
+    margin: 1%;
+    background-color: rgba(3, 45, 87, 0.27);
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto;
 }
