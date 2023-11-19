@@ -30,10 +30,11 @@ cnx.commit()
 for row in data_from_db:
     print(row)
 
-#transform data into a list - muss das sein? Kann ich nicht auch direkt das dictionary nehmen?
+#transform data into a list
 results = [[row['num'], row['username'], row['Spanisch'], row['kommunikation'], row['Verhandlungsführung'],
             row['Selfempowerment'], row['presentation_skills']] for row in data_from_db]
 
+#create a dictonary with the ids
 results_dict = {index: row[0] for index, row in enumerate(results)}
 
 # Create a PuLP minimization problem
