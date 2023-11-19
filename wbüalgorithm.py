@@ -77,7 +77,6 @@ print("Optimal Objective Function Value:", prob.objective.value())
 
 
 # Execute the query
-#cursor.execute(insert_query, data_to_insert)
 
 cnx.commit()
 
