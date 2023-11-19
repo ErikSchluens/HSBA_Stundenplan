@@ -38,7 +38,7 @@ results = [[row['num'], row['username'], row['Spanisch'], row['kommunikation'], 
 results_dict = {index: row[0] for index, row in enumerate(results)}
 
 # Create a PuLP minimization problem
-prob = LpProblem("OptimizationProblem", LpMinimize)
+prob = LpProblem("wbu_problem", LpMinimize)
 
 # Create decision variables Xij
 rows = len(results)
