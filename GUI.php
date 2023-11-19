@@ -13,6 +13,10 @@ include_once ('header.php');
 </div>
 
 <?php
+//if you´re not login you will be redirected to the Login page
+if ($_SESSION['user_id'] ==null ) {
+    header('Location:Login.php');
+}
 if ($_SESSION['user_id'] > 24) {
     // Display content for user group 24 and bigger (Students)
     echo '<div class="btn-group btn-group-lg"></div>';
