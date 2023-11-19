@@ -13,8 +13,8 @@ include_once ('header.php');
 </div>
 
 <?php
-if ($_SESSION['user_id'] == 24) {
-    // Display content for user group 24 (Students)
+if ($_SESSION['user_id'] > 24) {
+    // Display content for user group 24 and bigger (Students)
     echo '<div class="btn-group btn-group-lg"></div>';
     echo '<div class="homepage_optioncontainer">
             <div style="justify-content: center; text-align: center;">
