@@ -60,7 +60,7 @@ if ($mysqli->connect_error) {
         <!-- Für jede vorhande Wahl wird eine Tabellezeile ausgegeben -->
         <?php
         // SQL-Abfrage für Daten ausführen
-        $dataQuery = "SELECT * FROM [Tabellenname]";
+        $dataQuery = "SELECT * FROM Excursion_Zwischentabelle";
         $dataResult = $mysqli->query($dataQuery);
         foreach($dataResult as $row) {
             ?>
@@ -99,7 +99,7 @@ if ($mysqli->connect_error) {
             <!-- Für jede vorhande Wahl wird eine Tabellezeile ausgegeben -->
             <?php
             // SQL-Abfrage für Daten ausführen
-            $dataQuery = "SELECT * FROM [Tablename]";
+            $dataQuery = "SELECT * FROM [Tabellenname]";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
