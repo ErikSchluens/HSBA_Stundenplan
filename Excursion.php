@@ -2,7 +2,8 @@
 //if you´re not login you will be redirected to the Login page
 if ($_SESSION['user_id'] ==null ) {
     header('Location:Login.php');
-}?>
+    }
+    ?>
     <style>
         table {
             width: 15%;
