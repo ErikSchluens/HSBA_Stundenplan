@@ -20,7 +20,34 @@ if ($_SESSION['user_id'] ==null ) {
 if ($_SESSION['user_id'] >= 24) {
     // Display content for user group 24 and bigger (Students)
     echo '<div class="btn-group btn-group-lg"></div>';
-      echo '<div class="homepage_optioncontainer">
+    echo '<div class="homepage_optioncontainer">
+            <div style="justify-content: center; text-align: center;">
+                <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
+                <div class="excursion_option" style="padding: 19%">
+                    <a href="#" class="plus">+</a>
+                 </div>
+                 <p1> Hier wird noch gebaut. </p1>
+            </div>
+             <div style="justify-content: center; text-align: center;">
+                <img src="WBÜ.png" alt="WBÜ-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
+                <div class="excursion_option" style="padding: 19%">
+                    <a href="WBÜ.php" class="plus">+</a>
+                 </div>
+                 <p1> Klicke auf das Plus, um Deine WBÜs zu wählen. </p1>
+            </div>
+            <div style="justify-content: center; text-align: center;">
+                <img src="Exkursion.png" alt="Exkursion-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
+                <div class="excursion_option" style="padding: 19%">
+                    <a href="Excursion.php" class="plus">+</a>
+                 </div>
+                 <p1> Klicke auf das Plus, um Dein Exkursionsziel zu wählen. </p1>
+            </div>
+          </div>';
+}
+if ($_SESSION['user_id'] == 22 || $_SESSION['user_id'] == 23) {
+    // Display content for user group 22 and 23 (Administration)
+    echo '<div class="btn-group btn-group-lg"></div>';
+    echo '<div class="homepage_optioncontainer">
             <div style="justify-content: center; text-align: center;">
                 <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
                 <div class="excursion_option" style="padding: 19%">
@@ -40,20 +67,7 @@ if ($_SESSION['user_id'] >= 24) {
                 <div class="excursion_option" style="padding: 19%">
                     <a href="Exkursion_Admin.php" class="plus">+</a>
                  </div>
-                 <p1> Klicke auf das Plus, um die Exkursionen zu verteilen. </p1>
-            </div>
-          </div>';
-}
-if ($_SESSION['user_id'] == 22 || $_SESSION['user_id'] == 23) {
-    // Display content for user group 22 and 23 (Administration)
-    echo '<div class="btn-group btn-group-lg"></div>';
-    echo '<div class="homepage_optioncontainer">
-            <div style="justify-content: center; text-align: center;">
-                <img src="Kalender.png" alt="Kalender-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
-                <div class="excursion_option" style="padding: 19%">
-                    <a href="Stundenplan.php" class="plus">+</a>
-                 </div>
-                 <p1> Klicke auf das Plus, um einen Stundenplan zu erstellen! </p1>
+                 <p1>Klicke auf das Plus, um die Exkursionen zu verteilen. </p1>
             </div>
           </div>';
 }
