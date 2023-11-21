@@ -30,20 +30,19 @@ cnx.commit()
 for row in data_from_db:
     print(row)
 
-#transform data into a list
+#transform data into a list - muss das sein? Kann ich nicht auch direkt das dictionary nehmen?
 results = [[row['num'], row['username'], row['Spanisch'], row['kommunikation'], row['Verhandlungsführung'],
             row['Selfempowerment'], row['presentation_skills']] for row in data_from_db]
 
-#create a dictonary with the ids
 results_dict = {index: row[0] for index, row in enumerate(results)}
 
 # Create a PuLP minimization problem
-prob = LpProblem("wbu_problem", LpMinimize)
+prob = LpProblem("OptimizationProblem", LpMinimize)
 
 # Create decision variables Xij
 rows = len(results)
 cols = len(results[0]) - 2  # Exclude the first two columns
-X = [[LpVariable(f"X{i}{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
+X = [[LpVariable(f"X_{i}_{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
                         #results[i][0]}
 
 # Create the objective function
@@ -74,10 +73,7 @@ for var in prob.variables():
 print("Optimal Objective Function Value:", prob.objective.value())
 
 
-
-
 # Execute the query
-
 cnx.commit()
 
 #close the Databse connection
