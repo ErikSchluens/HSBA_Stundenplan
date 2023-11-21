@@ -3,6 +3,11 @@
 if ($_SESSION['user_id'] ==null ) {
     header('Location:Login.php');
     }
+//if you´re logged in with a user group other than admin you will be redirected to the homepage
+$forbiddenrange = range(1, 21);
+if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange) ){
+    header('Location:Gui.php');
+}
 ?>
 
 <?php
