@@ -26,6 +26,14 @@ data_from_db = cursor.fetchall()
 cursor.execute('Delete FROM `Excursion_Output`')
 cnx.commit()
 
+#execute a select query from the WBÜ_Input Table
+cursor.execute('SELECT * FROM `Constraints` WHERE Name="numstudents_excursion"')
+#fetch all the results
+constraints = cursor.fetchall()
+#store the value in a variable
+numberofstudents = int(constraints[0]['Value'])
+
+
 for row in data_from_db:
     print(row)
 
@@ -49,13 +57,13 @@ objective_function = lpSum(results[i][j + 2] * X[i][j] for i in range(rows) for 
 prob += objective_function
 
 # Now add all the constraints
-#Maximum of 20 students in each excursion
+#Maximum of students in each excursion changes depending on entry in constraints table in DB
 for y in range(cols):
     y = LpConstraint(
         e=lpSum(X[i][y] for i in range(rows)),
         sense=LpConstraintLE,
         name=f'20studentsper{y}',
-        rhs=2)
+        rhs=numberofstudents)
 
 
 
