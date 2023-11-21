@@ -30,7 +30,7 @@ if ($mysqli->connect_error) {
     <h2 style="margin: 0.5%" >Hallo <?php echo $username ?>!</h2>
 
     <?php
-    //Information required to establish connection
+    //When button is pressed write into database
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($mysqli->connect_error) {
@@ -55,7 +55,7 @@ if ($mysqli->connect_error) {
             $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
             $updateStmt = $mysqli->prepare($updateQuery);
             $updateStmt->bind_param("ss", $numberofstudents,  $postname);
-
+            //Display conformation statement
             if ($updateStmt->execute()) {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
                     . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
@@ -69,7 +69,7 @@ if ($mysqli->connect_error) {
             $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
             $insertStmt = $mysqli->prepare($insertQuery);
             $insertStmt->bind_param("ss", $postname, $numberofstudents);
-
+            //display conformation statement
             if ($insertStmt->execute()) {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
                     . "Die Nebenbedingung wurde übergeben" . "</p>";
