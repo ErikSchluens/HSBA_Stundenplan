@@ -9,7 +9,7 @@ $username = (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) ? $_
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'TimeTableknowledge'; // Hier sollte der Name deiner Datenbank stehen
+$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
 $db_port = 8889;
 
 $mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
@@ -33,7 +33,8 @@ if (isset($_POST["submit"])) {
 
     // If-Abfrage, ob der User in der Datenbank vorhanden ist, falls nicht, schlägt der Login fehl
     if (empty($result)) {
-        echo "Login fehlgeschlagen1";
+        echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'> Login Fehlgeschlagen.
+                Bitte probiere es erneut </p>";
     } else {
         // Nun wird das Passwort überprüft
         $passwordHashed = password_hash($result["password"], PASSWORD_BCRYPT);
@@ -47,7 +48,8 @@ if (isset($_POST["submit"])) {
             $_SESSION['user_id'] = $user_id;
             header("Location:GUI.php");
         } else {
-            echo "Login fehlgeschlagen2";
+            echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'> Login Fehlgeschlagen.
+                    Bitte probiere es erneut </p>";
         }
     }
 }
@@ -57,7 +59,7 @@ if (isset($_POST["submit"])) {
 // Falls das Passwort falsch ist, speichere eine Fehlermeldung in einer Variablen
 $error_message = "";
 if (!$checkPassword) {
-    $error_message = "Login fehlgeschlagen3";
+    $error_message = "Login fehlgeschlagen";
 }
 
 $mysqli->close(); // Datenbankverbindung schließen
