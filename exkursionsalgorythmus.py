@@ -50,7 +50,7 @@ prob = LpProblem("excursion_optimisation", LpMinimize)
 # Create decision variables Xij
 rows = len(results)
 cols = len(results[0]) - 2  # Exclude the first two columns
-X = [[LpVariable(f"X{i}{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
+X = [[LpVariable(f"X_{i}_{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
 
 # Create the objective function
 objective_function = lpSum(results[i][j + 2] * X[i][j] for i in range(rows) for j in range(cols))
