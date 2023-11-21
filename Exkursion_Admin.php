@@ -32,17 +32,9 @@ if ($mysqli->connect_error) {
     <?php
     //Information required to establish connection
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $db_host = '127.0.0.1';
-        $db_user = 'root';
-        $db_password = 'root';
-        $db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
-        $db_port = 8889;
 
-        // Establish connection to DB
-        $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-        if ($conn->connect_error) {
-            die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
+        if ($mysqli->connect_error) {
+            die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
         }
 
         //information that needs to be saved in DB
@@ -53,7 +45,7 @@ if ($mysqli->connect_error) {
 
         // Check if the variable already exists in the table
         $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
-        $checkStmt = $conn->prepare($checkQuery);
+        $checkStmt = $mysqli->prepare($checkQuery);
         $checkStmt->bind_param("s", $postname);
         $checkStmt->execute();
         $checkResult = $checkStmt->get_result();
@@ -61,7 +53,7 @@ if ($mysqli->connect_error) {
         if ($checkResult->num_rows > 0) {
             // Update existing record if the username already exists
             $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
-            $updateStmt = $conn->prepare($updateQuery);
+            $updateStmt = $mysqli->prepare($updateQuery);
             $updateStmt->bind_param("ss", $numberofstudents,  $postname);
 
             if ($updateStmt->execute()) {
@@ -75,7 +67,7 @@ if ($mysqli->connect_error) {
         } else {
             // Insert a new record if the username doesn't exist
             $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
-            $insertStmt = $conn->prepare($insertQuery);
+            $insertStmt = $mysqli->prepare($insertQuery);
             $insertStmt->bind_param("ss", $postname, $numberofstudents);
 
             if ($insertStmt->execute()) {
