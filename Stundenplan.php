@@ -1,4 +1,9 @@
-<?php include_once('header.php')?>
+<?php include_once('header.php');
+//if you´re not logged in you will be redirected to the Login page
+if ($_SESSION['user_id'] ==null ) {
+    header('Location:Login.php');
+    }
+?>
 
     <div class="body_box">
 
