@@ -11,7 +11,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
 ?>
 
 <?php
-// Verbindung der Datenbank
+// Connection to DB
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
@@ -115,14 +115,14 @@ if ($mysqli->connect_error) {
                     Limassol
                 </td>
             </tr>
-            <!-- Für jede vorhande Wahl wird eine Tabellezeile ausgegeben -->
+            <!-- Display one row for every vote -->
             <?php
-            // SQL-Abfrage für Daten ausführen
+            // SQL-Query to get Data
             $dataQuery = "SELECT * FROM Excursion_Zwischentabelle";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
-                <!-- In die Tabellenzeilen werden die Inhalte aus dem SQL übernommen -->
+                <!-- Table rows show data from the query -->
                 <tr>
                     <td class="table_cell"><?=$row['username']?></td>
                     <td class="table_cell"><?=$row['Hamburg']?></td>
@@ -138,7 +138,7 @@ if ($mysqli->connect_error) {
         </table>
     </div>
 
-    <!-- Nach dem man sieht wie viele Wahlen es gibt, kann man die Anzahl der Studenten pro Exkursion festelegen -->
+    <!-- You can choose how many students can be in one excursion after seeing amount of votes -->
     <div class="homepage_optioncontainer" style="margin-top: 2%">
         <h5> 1. Gib die maximale Anzahl der Studenten pro Exkursion an</h5>
         <div style="align-items: center; justify-content: center; text-align: center;">
@@ -150,7 +150,7 @@ if ($mysqli->connect_error) {
         </div>
     </div>
 
-    <!-- Mit diesem Button kann man die Python scripte starten-->
+    <!-- With this button you will later be able to start the python scripts-->
     <div class="homepage_optioncontainer" style="margin-top: 2%">
         <div style="align-items: center; justify-content: center; text-align: center;">
             <h5> 2. Klicke auf diesen Button, um die Python Scripte zu starten  </h5>
@@ -177,12 +177,12 @@ if ($mysqli->connect_error) {
             </tr>
             <!-- Für jede vorhande Wahl wird eine Tabellezeile ausgegeben -->
             <?php
-            // SQL-Abfrage für Daten ausführen
+            // SQL-Query to get Data
             $dataQuery = "SELECT * FROM [Tabellenname]";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
-                <!-- In die Tabellenzeilen werden die Inhalte aus dem SQL übernommen -->
+                <!-- Take data from the query and display it-->
                 <tr>
                     <td class="table_cell"><?=$row['variable']?></td>
                     <td class="table_cell"><?=$row['wert']?></td>
@@ -195,7 +195,7 @@ if ($mysqli->connect_error) {
 
 </div>
 <?php
-// Verbindung schließen
+// Close the connection
 $mysqli->close();
 ?>
 <?php include_once('footer.php') ?>
