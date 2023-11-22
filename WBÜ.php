@@ -1,4 +1,5 @@
-<?php include_once ('header.php') ?>
+<?php include_once ('header.php') ?> <!-- Integration of the header -->
+    <!-- Right here I style the table, due to not working in the CSS I decided to style it in File-->
     <style>
         table {
             width: 15%;
@@ -24,22 +25,21 @@
         }
     </style>
 
-
 <?php
+// Connection to our database is established, If it fails we get a error message
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = '127.0.0.1';
     $db_user = 'root';
     $db_password = 'root';
-    $db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
+    $db_db = 'Stundenplan';
     $db_port = 8889;
 
-    // Verbindung zur Datenbank herstellen
     $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
 
     if ($conn->connect_error) {
         die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
     }
-
+    // Right here I give every dropdown a variable, so I can use them in SQL Statement to insert Data in the Database
     $dropdown1 = $_POST["dropdown1"];
     $dropdown2 = $_POST["dropdown2"];
     $dropdown3 = $_POST["dropdown3"];
@@ -85,10 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
     <title>WBÜ</title>
-
+    <!-- Begin of the website, where the specific user is adressed -->
     <h2 style="margin: 0.5%">Bitte wähle deine WBÜ Kurse, <?php echo $username ?></h2>
     <body>
-
+    <!-- Table where all selectable courses are listed -->
     <table>
         <th>Verfügbare Kurse</th>
         <tr><td>Spanisch</td></tr>
@@ -98,8 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Kommunikation</td></tr>
     </table>
 
+    <!-- Form for the Dropdowns is created -->
     <form method="post" style="margin-left: 10%" onsubmit="return validateForm()">
 
+        <!-- Dropdown 1 will be there everytime in the first place -->
         <div style="margin-left: 10%; margin-top: -14%; position: absolute">Wahl 1</div>
         <select name="dropdown1" id="dropdown1" onchange="showDropdown(1)" style="position: absolute; margin-left: 10%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
@@ -110,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="kommunikation">Kommunikation</option>
         </select>
 
+        <!-- Dropdown 2-5 will only be shown If the Dropdown before was selected -->
         <div style="margin-left: 22%; margin-top: -14%; position: absolute">Wahl 2</div>
         <select name="dropdown2" id="dropdown2" style="position: absolute; margin-left: 22%;margin-top: -12%">
             <option value="">Keinen Kurs</option>
@@ -149,10 +152,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="verhandlungsführung">Verhandlungsführung</option>
             <option value="kommunikation">Kommunikation</option>
         </select>
-
+        <!-- Button to submit results to the database -->
         <input type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: -14.3%; margin-left: 78%">
     </form>
-
+    <!-- This is just a placeholder-->
     <div style="height: 250px; width: 100%;"></div>
 
-<?php include_once('footer.php') ?>
+<?php include_once('footer.php') ?> <!-- Integration of the footer -->

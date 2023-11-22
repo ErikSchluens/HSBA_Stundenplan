@@ -1,9 +1,10 @@
-<?php include_once ('header.php');
-//if you´re not login you will be redirected to the Login page
+<?php include_once ('header.php');// Integration of the header
+// If you´re not logged in you will be redirected to the Login page
 if ($_SESSION['user_id'] ==null ) {
     header('Location:Login.php');
     }
     ?>
+    <!-- Styling of the table -->
     <style>
         table {
             width: 15%;
@@ -28,16 +29,14 @@ if ($_SESSION['user_id'] ==null ) {
         }
     </style>
 <?php
-
-
+// Connection to our database is established, If it fails we get a error message
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = '127.0.0.1';
     $db_user = 'root';
     $db_password = 'root';
-    $db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
+    $db_db = 'Stundenplan';
     $db_port = 8889;
 
-    // Verbindung zur Datenbank herstellen
     $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
 
     if ($conn->connect_error) {
@@ -89,8 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
     <title>Exkursion</title>
-    <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
 
+    <!-- Begin of the website, where the specific user is adressed -->
+    <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
+    <!-- Table which shows which cities are selectable -->
     <h5 style="margin-left: 2.2%; margin-top: 5%">Verfügbare Städte</h5>
     <table>
         <th>Städte</th>
@@ -102,9 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Limassol</td></tr>
     </table>
 
-
+    <!-- Form for the Dropdowns is created -->
     <form method="post" style="margin-left: 10%">
 
+        <!-- Dropdown 1 will be there everytime in the first place -->
         <div style="margin-left: 10%; margin-top: -14%; position: absolute">1. Wahl</div>
         <select name="dropdown1" id="dropdown1" onchange="showDropdown(1)" style="position: absolute; margin-left: 10%;margin-top: -12%">
             <option value="">Keine Stadt ausgewählt</option>
@@ -116,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Limassol">Limassol</option>
         </select>
 
+        <!-- Dropdown 2-5 will only be shown If the Dropdown before was selected -->
         <div style="margin-left: 23%; margin-top: -14%; position: absolute">2. Wahl</div>
         <select name="dropdown2" id="dropdown2" style="position: absolute; margin-left: 23%;margin-top: -12%">
             <option value="">Keine Stadt ausgewählt</option>
@@ -160,8 +163,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Limassol">Limassol</option>
         </select>
 
+        <!-- Button to submit results to the database -->
         <input type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: -14%; margin-left: 81%">
     </form>
-
+    <!-- This is just a placeholder-->
     <div style="height: 250px; width: 100%;"></div>
-<?php include_once('footer.php')?>
+<?php include_once('footer.php')?> <!-- Integration of the footer-->
