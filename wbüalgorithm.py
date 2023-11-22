@@ -42,7 +42,7 @@ prob = LpProblem("OptimizationProblem", LpMinimize)
 # Create decision variables Xij
 rows = len(results)
 cols = len(results[0]) - 2  # Exclude the first two columns
-X = [[LpVariable(f"X{i}{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
+X = [[LpVariable(f"X_{i}_{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
                         #results[i][0]}
 
 # Create the objective function
@@ -73,11 +73,7 @@ for var in prob.variables():
 print("Optimal Objective Function Value:", prob.objective.value())
 
 
-
-
 # Execute the query
-#cursor.execute(insert_query, data_to_insert)
-
 cnx.commit()
 
 #close the Databse connection

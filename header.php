@@ -83,17 +83,16 @@ $user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : null;
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" style="color: white" href="GUI.php">Home</a>
-                <a class="nav-link" style="color: white" href="Stundenplan.php">Stundenplan</a>
 
                 <?php
                 if ($username) {
                     ?>
-                    <a class="nav-link" style="color: white" href="#">Profil</a>
+                    <a class="nav-link active" aria-current="page" style="color: white" href="GUI.php">Home</a>
                     <a class="nav-link" style="color: white" href="Logout.php">Logout</a>
                     <?php
                 } else {
                     ?>
+                    <a class="nav-link" style="color: white" href="#">Bitte logge dich ein, um auf alle Funktionen der Navbar zugreifen zu können.</a>
                     <a class="nav-link" style="color: white" href="Login.php">Login</a>
                     <?php
                 }

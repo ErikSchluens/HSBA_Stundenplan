@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Erstellungszeit: 19. Nov 2023 um 13:24
+-- Erstellungszeit: 19. Nov 2023 um 14:42
 -- Server-Version: 5.7.39
 -- PHP-Version: 7.4.33
 
@@ -24,49 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `WBÜ_Output`
+-- Tabellenstruktur für Tabelle `Excursion_Zwischentabelle`
 --
 
-CREATE TABLE `WBÜ_Output` (
-  `variable` varchar(255) NOT NULL,
-  `wert` varchar(265) NOT NULL
+CREATE TABLE `Excursion_Zwischentabelle` (
+  `num` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `Hamburg` int(11) NOT NULL DEFAULT '10',
+  `Lissabon` int(11) NOT NULL DEFAULT '10',
+  `Athen` int(11) NOT NULL DEFAULT '10',
+  `Bilbao` int(11) NOT NULL DEFAULT '10',
+  `Bordeaux` int(11) NOT NULL DEFAULT '0',
+  `Limassol` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `WBÜ_Output`
+-- Daten für Tabelle `Excursion_Zwischentabelle`
 --
 
-INSERT INTO `WBÜ_Output` (`variable`, `wert`) VALUES
-('X11', '1.0'),
-('X12', '1.0'),
-('X13', '0.0'),
-('X14', '0.0'),
-('X15', '0.0'),
-('X21', '0.0'),
-('X22', '0.0'),
-('X23', '1.0'),
-('X24', '1.0'),
-('X25', '0.0'),
-('X31', '0.0'),
-('X32', '1.0'),
-('X33', '0.0'),
-('X34', '1.0'),
-('X35', '0.0'),
-('X41', '1.0'),
-('X42', '0.0'),
-('X43', '1.0'),
-('X44', '0.0'),
-('X45', '0.0');
-
---
--- Indizes der exportierten Tabellen
---
-
---
--- Indizes für die Tabelle `WBÜ_Output`
---
-ALTER TABLE `WBÜ_Output`
-  ADD PRIMARY KEY (`variable`);
+INSERT INTO `Excursion_Zwischentabelle` (`num`, `username`, `Hamburg`, `Lissabon`, `Athen`, `Bilbao`, `Bordeaux`, `Limassol`) VALUES
+(1, 'Karstens.HSBA', 10, 1, 2, 3, 4, 10),
+(2, 'Student1', 4, 1, 2, 5, 10, 3),
+(3, 'Student2', 10, 2, 1, 10, 10, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

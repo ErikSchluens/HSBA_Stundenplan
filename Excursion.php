@@ -1,4 +1,9 @@
-<?php include_once ('header.php') ?>
+<?php include_once ('header.php');
+//if you´re not login you will be redirected to the Login page
+if ($_SESSION['user_id'] ==null ) {
+    header('Location:Login.php');
+    }
+    ?>
     <style>
         table {
             width: 15%;
@@ -24,6 +29,7 @@
     </style>
 <?php
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = '127.0.0.1';
     $db_user = 'root';
@@ -44,18 +50,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dropdown4 = $_POST["dropdown4"];
     $dropdown5 = $_POST["dropdown5"];
 
-    // SQL-Query, um die ausgewählten Werte in die Datenbank einzufügen
-    $sql = "INSERT INTO Excursion_Input (username, 1Wahl, 2Wahl, 3Wahl, 4Wahl, 5Wahl) 
-            VALUES ('$username', '$dropdown1', '$dropdown2', '$dropdown3', '$dropdown4', '$dropdown5')";
+    // Check if the username already exists in the table
+    $checkQuery = "SELECT * FROM Excursion_Input WHERE username = ?";
+    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt->bind_param("s", $username);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
 
-    if ($conn->query($sql) === TRUE) {
-        echo "<p style='position: absolute;margin-left: 42%;margin-top: 10%;'>" . "Danke für deine Wahl" . "</p>";
+    if ($checkResult->num_rows > 0) {
+        // Update existing record if the username already exists
+        $updateQuery = "UPDATE Excursion_Input SET 1wahl=?, 2wahl=?, 3wahl=?, 4wahl=?, 5wahl=? WHERE username=?";
+        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $username);
+
+        if ($updateStmt->execute()) {
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Deine Wahl wurde erfolgreich aktualisiert" . "</p>";
+        } else {
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>"
+                . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+        }
+        $updateStmt->close();
     } else {
-        echo "Fehler beim Einfügen in die Datenbank: " . $conn->error;
-    }
+        // Insert a new record if the username doesn't exist
+        $insertQuery = "INSERT INTO Excursion_Input (username, 1wahl, 2wahl, 3wahl, 4wahl, 5wahl) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertStmt = $conn->prepare($insertQuery);
+        $insertStmt->bind_param("ssssss", $username, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
 
-    // Datenbankverbindung schließen
-    $conn->close();
+        if ($insertStmt->execute()) {
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Danke für deine Wahl" . "</p>";
+        } else {
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>"
+                . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+        }
+
+        $insertStmt->close();
+    }
 }
 ?>
 
@@ -69,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tr><td>Lissabon</td></tr>
         <tr><td>Athen</td></tr>
         <tr><td>Bilbao</td></tr>
-        <tr><td>Bordeux</td></tr>
+        <tr><td>Bordeaux</td></tr>
         <tr><td>Limassol</td></tr>
     </table>
 
@@ -83,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -94,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -105,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -116,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 
@@ -127,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Lissabon">Lissabon</option>
             <option value="Athen">Athen</option>
             <option value="Bilbao">Bilbao</option>
-            <option value="Bordeux">Bordeux</option>
+            <option value="Bordeaux">Bordeaux</option>
             <option value="Limassol">Limassol</option>
         </select>
 

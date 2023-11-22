@@ -1,42 +1,86 @@
+.body_box {
+    height: fit-content;
+    min-height: 840px;
+}
+
 .navbar {
     background-color: #032d57;
 }
-.text1 {
+
+.homepage_optioncontainer {
+    height: 250px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.excursion_option {
+    box-sizing: border-box;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(3, 45, 87, 0.27);
+    border-radius: 15px;
+    height: 200px;
+    width: 400px;
+    font-size: 30px;
+    margin-bottom: 4%;
+}
+.wbu_option {
     box-sizing: border-box;
     position: center;
-    background-color: lightslategrey;
+    background-color: rgba(3, 45, 87, 0.27);
     border-radius: 15px;
-    margin-left: 10%;
     padding: 6%;
     color: white;
     height: 200px;
     width: 400px;
     font-size: 30px;
 }
-.text2 {
-    box-sizing: border-box;
-    position: center;
-    background-color: lightslategrey;
-    border-radius: 15px;
-    margin-left: 10%;
-    margin-right: -9%;
-    padding: 6%;
-    color: white;
-    height: 200px;
-    width: 400px;
-    font-size: 30px;
-}
+
 .btn-group {
     text-align: center;
     margin-top: 10%;
 }
-a {
+a.plus:link {
+    justify-content: space-around;
+    align-items: center;
     text-decoration: none;
     color: black;
 }
-a:hover {
+a.plus:hover {
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
     color: white;
 }
+
+a.plus:visited {
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+a.textlink:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a.textlink:hover {
+    color: #032d57;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a.textlink:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
 .p1 {
     text-align: left;
     margin-left: 13%;
@@ -54,8 +98,64 @@ a:hover {
 }
 
 .footer {
-    height: 220px;
+    position: absolute;
+    margin-bottom: 0;
+    height: fit-content;
+    min-height: 200px;
     width: 100%;
     background-color: #032d57;
     color: white;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-container .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(3, 45, 87, 0.27);
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    margin-top: -18px; /* Halbe Höhe des Tooltips für die zentrierte Ausrichtung */
+    margin-left: 16px; /* Abstand zum Bild */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container .tooltip::before {
+    content: "";
+    position: absolute;
+    top: 13.1%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #000000;
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.constraint_box {
+    padding: 1%;
+    margin: 1%;
+    background-color: rgba(3, 45, 87, 0.27);
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto;
 }
