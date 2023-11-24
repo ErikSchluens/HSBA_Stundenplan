@@ -64,6 +64,7 @@ for y in range(cols):
         sense=LpConstraintLE,
         name=f'20studentsper{y}',
         rhs=numberofstudents)
+    prob += y
 
 
 
