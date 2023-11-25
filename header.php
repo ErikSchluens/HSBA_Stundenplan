@@ -85,9 +85,9 @@ $user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : null;
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <!-- Now I added a function that only a user who is logged in can see the Logout and Home button
-                otherwise there will be a Login -->
                 <?php
+                //Now I added a function that only a user who is logged in can see the Logout and Home button
+                //otherwise there will be a Login
                 if ($username) {
                     ?>
                     <a class="nav-link active" aria-current="page" style="color: white" href="GUI.php">Home</a>
