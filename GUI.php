@@ -1,6 +1,12 @@
 
 <?php
 include_once ('header.php');
+// If you´re not logged in you will be redirected to the Login page
+if ($_SESSION['user_id'] ==null ) {
+    header('Location:Login.php');
+}
+?>
+
 ?>
 
 
