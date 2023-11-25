@@ -367,7 +367,6 @@ INSERT INTO `LogInxLecturers` (`user_id`, `lecturer_id`) VALUES
 (18, 18),
 (19, 19),
 (20, 20),
-(21, 21);
 
 -- --------------------------------------------------------
 
@@ -674,7 +673,7 @@ ALTER TABLE `LecturerXSlots`
 -- Constraints der Tabelle `LogInXAdministration`
 --
 ALTER TABLE `LogInXAdministration`
-  ADD CONSTRAINT `Folge 8` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`),
+  ADD CONSTRAINT `Foreign 8` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`),
   ADD CONSTRAINT `Foreign 7` FOREIGN KEY (`admin_id`) REFERENCES `Administration` (`admin_id`);
 
 --
@@ -682,6 +681,7 @@ ALTER TABLE `LogInXAdministration`
 --
 ALTER TABLE `LogInxLecturers`
   ADD CONSTRAINT `Foreign 9` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`);
+  ADD CONSTRAINT `Foreign 15` FOREIGN KEY (`lecturer_id`) REFERENCES `Lecturer` (`lecturer_id`);
 
 --
 -- Constraints der Tabelle `Timetable`
