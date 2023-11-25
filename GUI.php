@@ -36,11 +36,11 @@ if ($_SESSION['user_id'] >= 24) {
                  <p1> Klicke auf das Plus, um Dein Exkursionsziel zu wählen. </p1>
             </div>
             <div style="justify-content: center; text-align: center;">
-                <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
+                <img src="Smiley.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
                 <div class="excursion_option" style="padding: 19%">
                     <a href="Ergebnissicht.php" class="plus">+</a>
                  </div>
-                 <p1> Hier wird noch gebaut. </p1>
+                 <p1> Klicke auf das Plus, um deine Wahlergebnisse zu sehen. </p1>
             </div>
           </div>';
 }
