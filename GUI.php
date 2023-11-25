@@ -48,13 +48,6 @@ if ($_SESSION['user_id'] == 22 || $_SESSION['user_id'] == 23) {
     // Display content for user group 22 and 23 (Administration)
     echo '<div class="btn-group btn-group-lg"></div>';
     echo '<div class="homepage_optioncontainer">
-            <div style="justify-content: center; text-align: center;">
-                <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
-                <div class="excursion_option" style="padding: 19%">
-                    <a href="#" class="plus">+</a>
-                 </div>
-                 <p1> Hier wird noch gebaut. </p1>
-            </div>
              <div style="justify-content: center; text-align: center;">
                 <img src="WBÜ.png" alt="WBÜ-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
                 <div class="excursion_option" style="padding: 19%">
@@ -68,6 +61,13 @@ if ($_SESSION['user_id'] == 22 || $_SESSION['user_id'] == 23) {
                     <a href="Exkursion_Admin.php" class="plus">+</a>
                  </div>
                  <p1>Klicke auf das Plus, um die Exkursionen zu verteilen. </p1>
+            </div>
+            <div style="justify-content: center; text-align: center;">
+                <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
+                <div class="excursion_option" style="padding: 19%">
+                    <a href="#" class="plus">+</a>
+                 </div>
+                 <p1> Hier wird noch gebaut. </p1>
             </div>
           </div>';
 }
