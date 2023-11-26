@@ -5,7 +5,7 @@ config = {
   'password': 'root',
   'host': 'localhost',
   'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-  'database': 'Stundenplan',
+  'database': 'timetableknowledge',
   'raise_on_warnings': True
 }
 
