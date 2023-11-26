@@ -7,7 +7,7 @@ config = {
   'password': 'root',
   'host': 'localhost',
   'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-  'database': 'Stundenplan',
+  'database': 'timetableknowledge',
   'raise_on_warnings': True
 }
 
@@ -58,24 +58,24 @@ prob += objective_function
 
 # Now add all the constraints
 #Maximum of students in each excursion changes depending on entry in constraints table in DB
-for y in range(cols):
-    y = LpConstraint(
-        e=lpSum(X[i][y] for i in range(rows)),
+for students_per_excursion in range(cols):
+    students_per_excursion = LpConstraint(
+        e=lpSum(X[i][students_per_excursion] for i in range(rows)),
         sense=LpConstraintLE,
-        name=f'20studentsper{y}',
+        name=f'studentsper{students_per_excursion}',
         rhs=numberofstudents)
-    prob += y
+    prob += students_per_excursion
 
 
 
 #one excursion per Student
-for i in range(rows):
-    i = LpConstraint(
-        e=lpSum(X[i][y] for y in range(cols)),
+for excursionperstudents in range(rows):
+    excursionperstudents = LpConstraint(
+        e=lpSum(X[excursionperstudents][y] for y in range(cols)),
         sense=LpConstraintEQ,
-        name=f'Singelexcursion{i}',
+        name=f'Singelexcursion{excursionperstudents}',
         rhs=1)
-    prob += i
+    prob += excursionperstudents
 
 
 
