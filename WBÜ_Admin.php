@@ -14,7 +14,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
 <!-- This is where the body of the page begins. -->
 <div class="body_box">
     <h2 style="margin: 0.5%" >Hallo <?php echo $username ?>!</h2>
-    <!-- Box with button to start the WBÜ distribution. At the moment the button does not work yet. The python script must be started manually.  -->
+    <!-- Div with button to start the WBÜ distribution. At the moment the button does not work yet. The python script must be started manually.  -->
     <div class="homepage_optioncontainer" style="margin-top: 2%;">
         <div class="distribution_activator">
             <h5> WBÜ-Verteilung </h5>
@@ -89,7 +89,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
             </tr>
             <!-- A table row is output for each existing choice stored in the database -->
             <?php
-            // SQL query to pull the data from the table in which the optimal distribution results from the python algorithm are stored (WBÜ-Output).
+            // SQL query to pull the data from the table in which the optimal distribution results from the python algorithm are stored (WBÜ_Output).
             $dataQuery = "SELECT * FROM WBÜ_Output";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
