@@ -14,6 +14,57 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
 <!-- This is where the body of the page begins. -->
 <div class="body_box">
     <h2 style="margin: 0.5%" >Hallo <?php echo $username ?>!</h2>
+    <?php
+    //this code section modifies the function to set a max. number of students for a course.
+    //When submit button is pressed write into database
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($mysqli->connect_error) {
+            die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
+        }
+        //information that needs to be saved in DB
+        $wbünumber = $_POST["wbünumber"];
+        //define the name of constraint
+        $postname = "wbünumber";
+        // Check if the variable already exists in the table
+        $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
+        $checkStmt = $mysqli->prepare($checkQuery);
+        $checkStmt->bind_param("s", $postname);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
+
+        if ($checkResult->num_rows > 0) {
+            // Update existing record if the username already exists
+            $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
+            $updateStmt = $mysqli->prepare($updateQuery);
+            $updateStmt->bind_param("ss", $wbünumber,  $postname);
+            //Display conformation statement
+            if ($updateStmt->execute()) {
+                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                    . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
+            } else {
+                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+            }
+            $updateStmt->close();
+        } else {
+            // Insert a new record if the username doesn't exist
+            $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
+            $insertStmt = $mysqli->prepare($insertQuery);
+            $insertStmt->bind_param("ss", $postname, $wbünumber);
+            //display conformation statement
+            if ($insertStmt->execute()) {
+                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                    . "Die Nebenbedingung wurde übergeben" . "</p>";
+            } else {
+                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+            }
+
+            $insertStmt->close();
+        }
+
+    }
+    ?>
     <!-- Div with button to start the WBÜ distribution. At the moment the button does not work yet. The python script must be started manually.  -->
     <div class="homepage_optioncontainer" style="margin-top: 2%;">
         <div class="distribution_activator">
@@ -70,6 +121,20 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
             ?>
         </table>
     </div>
+    <!-- You can choose how many students can be in one Course after seeing amount of votes -->
+    <div class="homepage_optioncontainer" style="margin-top: 3%">
+        <div class="distribution_activator">
+            <h5> 1. Lege die max. Teilnehmendenzahl pro Kurs fest  </h5>
+            <div style="margin-top: 5%;">
+                <form method="post">
+                    <label for="number">Maximal-Anzahl der Studenten pro WBÜ-Kurs:</label>
+                    <input type="number" id="wbünumber" name="wbünumber" required min="1" placeholder="min. 1 Person"> <!--min gibt kleinste Zahl an. -->
+                    <input type="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Table with the optimal distribution of students to the current WBÜs. -->
     <div style="margin-left: 7%; margin-bottom: 2%;">
         <h5> WBÜ-Zuteilung
