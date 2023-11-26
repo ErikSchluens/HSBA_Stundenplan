@@ -1,19 +1,18 @@
+/* This sets the color for the navbar */
+.navbar {
+    background-color: #032d57;
+}
+/* This styles the body for every subpage of the web application */
 .body_box {
     height: fit-content;
     min-height: 840px;
 }
-
-.navbar {
-    background-color: #032d57;
-}
-
 .homepage_optioncontainer {
-    height: 250px;
+    height: fit-content;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin: 2%;
 }
 
 .excursion_option {
@@ -38,6 +37,34 @@
     width: 400px;
     font-size: 30px;
 }
+
+/* This styles the div that contains the start button on the admin pages for the WBÜ and excursion distribution */
+.distribution_activator {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 15px;
+}
+
+/* This styles the tables on the admin pages for the wbü and excursion distribution */
+.distribution_table {
+    width:90%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.table_cell {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+
 
 .btn-group {
     text-align: center;
@@ -97,6 +124,7 @@ a.textlink:visited {
     font-size: 20px;
 }
 
+/* This styles the footer on each page of the web application. */
 .footer {
     position: absolute;
     margin-bottom: 0;
@@ -105,8 +133,26 @@ a.textlink:visited {
     width: 100%;
     background-color: #032d57;
     color: white;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    padding: 5%;
 }
 
+/* Here are style elements for the timetable generator page that was not created due to the restriction.*/
+.constraint_box {
+    padding: 1%;
+    margin: 1%;
+    background-color: rgba(3, 45, 87, 0.27);
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto;
+}
 .tooltip-container {
     position: relative;
     display: inline-block;
@@ -144,18 +190,4 @@ a.textlink:visited {
 .tooltip-container:hover .tooltip {
     visibility: visible;
     opacity: 1;
-}
-
-.constraint_box {
-    padding: 1%;
-    margin: 1%;
-    background-color: rgba(3, 45, 87, 0.27);
-    border-radius: 15px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #000000;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: auto;
 }
