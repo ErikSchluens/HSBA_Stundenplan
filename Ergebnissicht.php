@@ -8,7 +8,7 @@ if ($_SESSION['user_id'] == null) {
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
+$db_db = 'timetableknowledge'; // Hier sollte der Name deiner Datenbank stehen
 $db_port = 8889;
 
 $mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
@@ -111,8 +111,9 @@ if ($mysqli->connect_error) {
     <div class="homepage_optioncontainer">
         Falls du Fragen hast melde dich bite bei dem Administrationsteam!
     </div>
-    <?php
-    // Verbindung schließen
-    $mysqli->close();
-    ?>
-    <?php include_once('footer.php') ?>
+</div>
+<?php
+// Verbindung schließen
+$mysqli->close();
+ include_once('footer.php')
+?>
