@@ -17,7 +17,6 @@ if ($_SESSION['user_id'] ==null ) {
     <?php
     if ($_SESSION['user_id'] >= 24) {
         // Display content for user group 24 and bigger (Students)
-        echo '<div class="btn-group btn-group-lg"></div>';
         echo '<div class="homepage_optioncontainer">
              <div style="justify-content: center; text-align: center;">
                 <img src="WBÜ.png" alt="WBÜ-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
@@ -44,7 +43,6 @@ if ($_SESSION['user_id'] ==null ) {
     }
     if ($_SESSION['user_id'] == 22 || $_SESSION['user_id'] == 23) {
         // Display content for user group 22 and 23 (Administration)
-        echo '<div class="btn-group btn-group-lg"></div>';
         echo '<div class="homepage_optioncontainer">
              <div style="justify-content: center; text-align: center;">
                 <img src="WBÜ.png" alt="WBÜ-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 
@@ -73,7 +71,6 @@ if ($_SESSION['user_id'] ==null ) {
     $allowed_user_ids = range(1, 21);
     if (in_array($_SESSION['user_id'], $allowed_user_ids)) {
         // Display content for user group 1 to 21
-        echo '<div class="btn-group btn-group-lg"></div>';
         echo '<div class="homepage_optioncontainer">
             <div style="justify-content: center; text-align: center;">
                 <img src="Construction.png" alt="Construction-Icon" style="width:100px;height:100px; margin-bottom: 5%;"> 

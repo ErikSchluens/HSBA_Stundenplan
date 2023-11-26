@@ -5,10 +5,11 @@
 /* This styles the body for every subpage of the web application */
 .body_box {
     height: fit-content;
-    min-height: 840px;
+    min-height: 700px;
 }
 .homepage_optioncontainer {
     height: fit-content;
+    min-height: 500px;
     display: flex;
     justify-content: space-around;
     align-items: center;
