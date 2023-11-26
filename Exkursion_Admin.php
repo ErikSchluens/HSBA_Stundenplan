@@ -1,4 +1,6 @@
-<?php include_once ('header.php');
+<?php
+//This includes the header to the Exkursion-Admin page.
+include_once ('header.php');
 //if you´re not login you will be redirected to the Login page
 if ($_SESSION['user_id'] == null) {
     header('Location:Login.php');
@@ -10,39 +12,19 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
 }
 ?>
 
-<?php
-// Connection to DB
-$db_host = '127.0.0.1';
-$db_user = 'root';
-$db_password = 'root';
-$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
-$db_port = 8889;
-
-$mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-if ($mysqli->connect_error) {
-    die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
-}
-?>
-
 <div class="body_box">
-
     <h2 style="margin: 0.5%" >Hallo <?php echo $username ?>!</h2>
-
     <?php
-    //When button is pressed write into database
+    //this code section modifies the function to set a max. number of students for an excursion destination.
+    //When submit button is pressed write into database
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
         if ($mysqli->connect_error) {
             die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
         }
-
         //information that needs to be saved in DB
         $numberofstudents = $_POST["numberofstudents"];
-
         //define the name of constraint
         $postname = "numstudents_excursion";
-
         // Check if the variable already exists in the table
         $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
         $checkStmt = $mysqli->prepare($checkQuery);
@@ -82,13 +64,11 @@ if ($mysqli->connect_error) {
         }
 
     }
-
     ?>
-
+    <!-- Table with all the current election results of the students.  -->
     <div style="margin-left: 7%; margin-top: 2%; margin-bottom: 2%;">
         <h5> Wahlergebnisse </h5>
         <div> In der untenstehenden Tabelle sind die Wahlergebnisse aller Studierenden zu sehen. </div>
-
     </div>
     <div class="homepage_optioncontainer">
         <table style="width:90%">
@@ -115,14 +95,14 @@ if ($mysqli->connect_error) {
                     Limassol
                 </td>
             </tr>
-            <!-- Display one row for every vote -->
+            <!-- A table row is output for each existing choice stored in the database -->
             <?php
-            // SQL-Query to get Data
+            // SQL query to pull the data from the table in which the election results are stored (Excursion-Zwischentabelle).
             $dataQuery = "SELECT * FROM Excursion_Zwischentabelle";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
-                <!-- Table rows show data from the query -->
+                <!-- The contents from the SQL are transferred to the table rows -->
                 <tr>
                     <td class="table_cell"><?=$row['username']?></td>
                     <td class="table_cell"><?=$row['Hamburg']?></td>
@@ -139,34 +119,36 @@ if ($mysqli->connect_error) {
     </div>
 
     <!-- You can choose how many students can be in one excursion after seeing amount of votes -->
-    <div class="homepage_optioncontainer" style="margin-top: 2%">
-        <h5> 1. Gib die maximale Anzahl der Studenten pro Exkursion an</h5>
-        <div style="align-items: center; justify-content: center; text-align: center;">
-            <form method="post">
-                <label for="number">Maximal-Anzahl der Studenten pro Exkursion:</label>
-                <input type="number" id="numberofstudents" name="numberofstudents" required min="1"> <!--min gibt kleinste Zahl an. -->
-                <input type="submit" value="Submit">
-            </form>
+    <div class="homepage_optioncontainer" style="margin-top: 3%">
+        <div class="distribution_activator">
+            <h5> 1. Lege die max. Teilnehmendenzahl pro Exkursionsziel fest  </h5>
+            <div style="margin-top: 5%;">
+                <form method="post">
+                    <label for="number">Maximal-Anzahl der Studenten pro Exkursion:</label>
+                    <input type="number" id="numberofstudents" name="numberofstudents" required min="1" placeholder="min. 1 Person"> <!--min gibt kleinste Zahl an. -->
+                    <input type="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- With this button you will later be able to start the python scripts-->
-    <div class="homepage_optioncontainer" style="margin-top: 2%">
-        <div style="align-items: center; justify-content: center; text-align: center;">
-            <h5> 2. Klicke auf diesen Button, um die Python Scripte zu starten  </h5>
-            <div> Yeah yeah yeah </div>
+    <!-- Div with button to start the WBÜ distribution. At the moment the button does not work yet. The python script must be started manually.  -->
+    <div class="homepage_optioncontainer" style="margin-top: 2%;">
+        <div class="distribution_activator" style="width: 51.07%;">
+            <h5> 2. Exkursions-Verteilung  </h5>
+            <div> Klicke auf Start, um die Studierenden optimal auf die Exkursionsziele zu verteilen. </div>
             <button type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: 2%"> Start</button>
         </div>
     </div>
-
+    <!-- Table with the optimal distribution of students to the excursion destinations.  -->
     <div style="margin-left: 7%; margin-top: 2%; margin-bottom: 2%;">
         <h5> Exkursions-Zuteilung
         </h5>
-        <div> In der untenstehenden Tabelle ist die optimale Zuteilung für die vorliegenden Exkursionen zu sehen.
+        <div> In der untenstehenden Tabelle ist die optimale Zuteilung von Studierenden zu dem vorliegenden Exkursionszielen zu sehen.
         </div>
     </div>
     <div class="homepage_optioncontainer">
-        <table style="width:90%">
+        <table class="distribution_table">
             <tr style="background-color: rgba(3, 45, 87, 0.27);">
                 <td class="table_cell">
                     Variable
@@ -175,14 +157,14 @@ if ($mysqli->connect_error) {
                     WBÜ
                 </td>
             </tr>
-            <!-- Für jede vorhande Wahl wird eine Tabellezeile ausgegeben -->
+            <!-- A table row is output for each existing choice stored in the database -->
             <?php
-            // SQL-Query to get Data
-            $dataQuery = "SELECT * FROM [Tabellenname]";
+            // SQL query to pull the data from the table in which the optimal distribution results from the python algorithm are stored (Excursion_Output).
+            $dataQuery = "SELECT * FROM Excursion_Output";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
-                <!-- Take data from the query and display it-->
+                <!-- The contents from the SQL are transferred to the table rows -->
                 <tr>
                     <td class="table_cell"><?=$row['variable']?></td>
                     <td class="table_cell"><?=$row['wert']?></td>
@@ -195,7 +177,5 @@ if ($mysqli->connect_error) {
 
 </div>
 <?php
-// Close the connection
-$mysqli->close();
-?>
-<?php include_once('footer.php') ?>
+//This includes the footer to the Exkursion-Admin page.
+include_once('footer.php') ?>

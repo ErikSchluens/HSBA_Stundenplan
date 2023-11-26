@@ -5,18 +5,6 @@
 
 // Definierung der username Variable
 $username = (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) ? $_REQUEST['username'] : null;
-// Verbindung der Datenbank
-$db_host = '127.0.0.1';
-$db_user = 'root';
-$db_password = 'root';
-$db_db = 'Stundenplan'; // Hier sollte der Name deiner Datenbank stehen
-$db_port = 8889;
-
-$mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-if ($mysqli->connect_error) {
-    die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
-}
 
 // If-Abfrage, wenn der Login-Knopf gedrückt wird
 if (isset($_POST["submit"])) {
