@@ -1,35 +1,34 @@
-<!-- Einbindung des Headers -->
-<?php include_once('header.php'); ?>
-<!-- Beginn Content -->
 <?php
+//This includes the header to the Log-In page.
+include_once('header.php');
+?>
 
-// Definierung der username Variable
+<?php
+// definition of the username variable
 $username = (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) ? $_REQUEST['username'] : null;
 
-// If-Abfrage, wenn der Login-Knopf gedrückt wird
+// If query when the login button is pressed
 if (isset($_POST["submit"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Hier findet die Abfrage von dem Username aus der Datenbank statt
+    // Query of the user name from the database
     $stmt = $mysqli->prepare("SELECT * FROM LogIn WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
 
-
-
-    // If-Abfrage, ob der User in der Datenbank vorhanden ist, falls nicht, schlägt der Login fehl
+    // If query whether the user exists in the database, if not, the login fails
     if (empty($result)) {
         echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'> Login Fehlgeschlagen.
                 Bitte probiere es erneut </p>";
     } else {
-        // Nun wird das Passwort überprüft
+        // Password verification
         $passwordHashed = password_hash($result["password"], PASSWORD_BCRYPT);
 
         $checkPassword = password_verify($password, $passwordHashed);
 
-        // Falls das Passwort richtig ist, wird der Benutzer weitergeleitet
+        // If the password is correct, the user will be redirected
         if($checkPassword === true) {
             $user_id = $result['user_id'];
             $_SESSION['username'] = $username;
@@ -41,20 +40,14 @@ if (isset($_POST["submit"])) {
         }
     }
 }
-
-
-
-// Falls das Passwort falsch ist, speichere eine Fehlermeldung in einer Variablen
+// If the password is incorrect, an error message is saved in a variable.
 $error_message = "";
 if (!$checkPassword) {
     $error_message = "Login fehlgeschlagen";
 }
-
-$mysqli->close(); // Datenbankverbindung schließen
 ?>
 
-
-<!-- Rest des HTML-Codes -->
+<!-- HTML code of the Login-Page-->
 <title>Login</title>
 <div style="text-align: center"><img src='HSBA_Logo_Lang.jpg' alt='HSBA Logo' style='width: 750px; height:200px; margin-top: 2%; margin-bottom: 4%'></div>
 <form style="text-align: center" method="POST" action="Login.php">
@@ -70,4 +63,7 @@ $mysqli->close(); // Datenbankverbindung schließen
 </form>
 <div style="height: 15%;width: 100%"></div>
 
-<?php include_once('footer.php'); ?>
+<?php
+//This includes the footer to the Log-In page.
+include_once('footer.php');
+?>
