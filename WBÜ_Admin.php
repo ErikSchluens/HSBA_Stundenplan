@@ -37,7 +37,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                     Spanisch
                 </td>
                 <td class="table_cell">
-                    Communication
+                    Kommunikation
                 </td>
                 <td class="table_cell">
                     Verhandlungsführung
@@ -60,7 +60,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                 <tr>
                     <td class="table_cell"><?=$row['username']?></td>
                     <td class="table_cell"><?=$row['Spanisch']?></td>
-                    <td class="table_cell"><?=$row['Communication']?></td>
+                    <td class="table_cell"><?=$row['kommunikation']?></td>
                     <td class="table_cell"><?=$row['Verhandlungsführung']?></td>
                     <td class="table_cell"><?=$row['Selfempowerment']?></td>
                     <td class="table_cell"><?=$row['presentation_skills']?></td>
