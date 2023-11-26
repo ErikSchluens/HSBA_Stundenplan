@@ -18,54 +18,90 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
     //this code section modifies the function to set a max. number of students for an excursion destination.
     //When submit button is pressed write into database
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if ($mysqli->connect_error) {
-            die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
+        if(isset($_POST["submit"])) {
+            if ($mysqli->connect_error) {
+                die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
+            }
+            //information that needs to be saved in DB
+            $numberofstudents = $_POST["numberofstudents"];
+            //define the name of constraint
+            $postname = "numstudents_excursion";
+            // Check if the variable already exists in the table
+            $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
+            $checkStmt = $mysqli->prepare($checkQuery);
+            $checkStmt->bind_param("s", $postname);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+
+            if ($checkResult->num_rows > 0) {
+                // Update existing record if the username already exists
+                $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
+                $updateStmt = $mysqli->prepare($updateQuery);
+                $updateStmt->bind_param("ss", $numberofstudents,  $postname);
+                //Display conformation statement
+                if ($updateStmt->execute()) {
+                    echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                        . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
+                } else {
+                    echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                        . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+                }
+                $updateStmt->close();
+            } else {
+                // Insert a new record if the username doesn't exist
+                $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
+                $insertStmt = $mysqli->prepare($insertQuery);
+                $insertStmt->bind_param("ss", $postname, $numberofstudents);
+                //display conformation statement
+                if ($insertStmt->execute()) {
+                    echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                        . "Die Nebenbedingung wurde übergeben" . "</p>";
+                } else {
+                    echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                        . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+                }
+
+                $insertStmt->close();
+            }
         }
-        //information that needs to be saved in DB
-        $numberofstudents = $_POST["numberofstudents"];
-        //define the name of constraint
-        $postname = "numstudents_excursion";
-        // Check if the variable already exists in the table
-        $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
-        $checkStmt = $mysqli->prepare($checkQuery);
-        $checkStmt->bind_param("s", $postname);
-        $checkStmt->execute();
-        $checkResult = $checkStmt->get_result();
-
-        if ($checkResult->num_rows > 0) {
-            // Update existing record if the username already exists
-            $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
-            $updateStmt = $mysqli->prepare($updateQuery);
-            $updateStmt->bind_param("ss", $numberofstudents,  $postname);
-            //Display conformation statement
-            if ($updateStmt->execute()) {
+        //action if button named delete is pressed
+        if(isset($_POST["delete"])) {
+            $deletequery_output = "DELETE FROM `Excursion_Output`";
+            $deletequery_transform = "DELETE FROM `Excursion_Zwischentabelle`";
+            if ($mysqli->query($deletequery_output) === true) {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
+                    . "Die Daten wurden erfolgreich aus der Output-Tabelle gelöscht." . "</p>";
             } else {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+                    . "Fehler beim Löschen in der Datenbank - Tabelle: Excursion_Output" . "</p>" . $mysqli->error;
             }
-            $updateStmt->close();
-        } else {
-            // Insert a new record if the username doesn't exist
-            $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
-            $insertStmt = $mysqli->prepare($insertQuery);
-            $insertStmt->bind_param("ss", $postname, $numberofstudents);
-            //display conformation statement
-            if ($insertStmt->execute()) {
+            //part for the transform table
+            if ($mysqli->query($deletequery_transform) === true) {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Die Nebenbedingung wurde übergeben" . "</p>";
+                    . "Die Daten wurden erfolgreich aus der Transform-Tabelle gelöscht." . "</p>";
             } else {
                 echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+                    . "Fehler beim Löschen in der Datenbank - Tabelle: Excursion_Zwischentabelle" . "</p>" . $mysqli->error;
             }
-
-            $insertStmt->close();
         }
 
     }
     ?>
-    <!-- Table with all the current election results of the students.  -->
+    <!-- You can delete old results in order to start a new polling period or to hide results-->
+    <div class="homepage_optioncontainer" style="margin-top: 3%">
+        <div class="distribution_activator">
+            <h5> Mit diesem Button werden die Ergebnistabellen geleert - Dies macht den Beginn einer neuen Wahlperiode aus  </h5>
+            Mit dem Button werden die Daten aus der Excursion_Output Tabelle und aus der Excursion_zwischentabelle gelöscht. <br>
+            Wenn der Datenstand in der Excursion_Input gleich geblieben ist, können diese Daten reproduziert werden. <br>
+            Bei einer Änderung in der Excursion_Input Tabelle kann es zu Abweichungen kommen.
+            <div style="margin-top: 5%;">
+                <form method="post">
+                    <input type="submit" name="delete" value="Achtung: Es werden mit dem Klick Daten gelöscht." class="btn btn-dark" style="background-color: #590319;">
+                </form>
+            </div>
+        </div>
+    </div
+            <!-- Table with all the current election results of the students.  -->
     <div style="margin-left: 7%; margin-top: 2%; margin-bottom: 2%;">
         <h5> Wahlergebnisse </h5>
         <div> In der untenstehenden Tabelle sind die Wahlergebnisse aller Studierenden zu sehen. </div>
@@ -126,7 +162,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                 <form method="post">
                     <label for="number">Maximal-Anzahl der Studenten pro Exkursion:</label>
                     <input type="number" id="numberofstudents" name="numberofstudents" required min="1" placeholder="min. 1 Person"> <!--min gibt kleinste Zahl an. -->
-                    <input type="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
+                    <input type="submit" name="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
                 </form>
             </div>
         </div>
@@ -137,7 +173,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
         <div class="distribution_activator" style="width: 51.07%;">
             <h5> 2. Exkursions-Verteilung  </h5>
             <div> Klicke auf Start, um die Studierenden optimal auf die Exkursionsziele zu verteilen. </div>
-            <button type="submit" name="submit" class="btn btn-dark" style="background-color: #032d57; margin-top: 2%"> Start</button>
+            <button type="submit" name="pythonstart" class="btn btn-dark" style="background-color: #032d57; margin-top: 2%"> Start</button>
         </div>
     </div>
     <!-- Table with the optimal distribution of students to the excursion destinations.  -->
