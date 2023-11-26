@@ -77,7 +77,9 @@ if ($_SESSION['user_id'] ==null ) {
                 <div class="excursion_option" style="padding: 19%">
                     <a href="#" class="plus">+</a>
                  </div>
-                 <p1> Hier wird noch an einer Kalenderdarstellung gebaut, um verfügbare Zeiten für den Stundenplan zu übermitteln. </p1>
+                 <p> Hier wird noch an einer Kalenderdarstellung gebaut, um </p>
+                  </n> 
+                  <p> verfügbare Zeiten für den Stundenplan zu übermitteln. </p>
             </div>
           </div>';
     }
