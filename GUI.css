@@ -7,6 +7,8 @@
     height: fit-content;
     min-height: 700px;
 }
+
+/* This styles a container div to align the divs inside horizontally on the website.*/
 .homepage_optioncontainer {
     height: fit-content;
     min-height: 500px;
@@ -16,6 +18,7 @@
     margin: 2%;
 }
 
+/* This styles the divs inside the container div homepage_optioncontainer.*/
 .excursion_option {
     box-sizing: border-box;
     justify-content: space-around;
@@ -65,10 +68,13 @@
     border-color: black;
 }
 
+/* This styles the buttons on all subpages of the web application */
 .btn-group {
     text-align: center;
     margin-top: 10%;
 }
+
+/* This styles the "+"-links on the homepage (GUI.php) */
 a.plus:link {
     justify-content: space-around;
     align-items: center;
@@ -88,7 +94,7 @@ a.plus:visited {
     text-decoration: none;
     color: black;
 }
-
+/* This styles all text-links in the web application. */
 a.textlink:link {
     color: black;
     background-color: transparent;
@@ -105,22 +111,6 @@ a.textlink:visited {
     color: black;
     background-color: transparent;
     text-decoration: none;
-}
-
-.p1 {
-    text-align: left;
-    margin-left: 13%;
-    font-size: 20px;
-}
-.p2 {
-    text-align: center;
-    margin-left: 17%;
-    font-size: 20px;
-}
-.p3 {
-    text-align: right;
-    margin-left: 18%;
-    font-size: 20px;
 }
 
 /* This styles the footer on each page of the web application. */
@@ -190,3 +180,23 @@ a.textlink:visited {
     visibility: visible;
     opacity: 1;
 }
+
+/* This styles different kinds of paragraphs in the web application.
+
+.p1 {
+    text-align: left;
+    margin-left: 13%;
+    font-size: 20px;
+}
+.p2 {
+    text-align: center;
+    margin-left: 17%;
+    font-size: 20px;
+}
+.p3 {
+    text-align: right;
+    margin-left: 18%;
+    font-size: 20px;
+}
+
+*/
