@@ -94,7 +94,7 @@ $user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : null;
 <!-- In the following the navbar is created -->
 <nav class="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" style="color: white; font-size: 30px;" href="#">HSBA</a>
+        <a class="navbar-brand" style="color: white; font-size: 30px;" href="GUI.php">HSBA</a>
         <button class="navbar-toggler" type="button" style="background-color: white" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" style="background-color: white"></span>
         </button>
