@@ -26,6 +26,12 @@ data_from_db = cursor.fetchall()
 cursor.execute('Delete FROM `WBÜ_Output`')
 cnx.commit()
 
+#execute a select query from the WBÜ_Input Table
+cursor.execute('SELECT * FROM `Constraints` WHERE Name="wbünumber"')
+#fetch all the results
+constraints = cursor.fetchall()
+#store the value in a variable
+numberofstudents = int(constraints[0]['Value'])
 
 for row in data_from_db:
     print(row)
@@ -42,7 +48,7 @@ prob = LpProblem("OptimizationProblem", LpMinimize)
 # Create decision variables Xij
 rows = len(results)
 cols = len(results[0]) - 2  # Exclude the first two columns
-X = [[LpVariable(f"X_{i}_{j+1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
+X = [[LpVariable(f"X_{i}_{j + 1}", lowBound=0, cat="Binary") for j in range(cols)] for i in results_dict.values()]
                         #results[i][0]}
 
 # Create the objective function
@@ -50,13 +56,26 @@ objective_function = lpSum(results[i][j + 2] * X[i][j] for i in range(rows) for 
 prob += objective_function
 
 # Now add all the constraints
-#Only 2 students in each course
-for i in range(rows):
-    prob += lpSum(X[i][j] for j in range(cols)) == 2, f"Row_{i+1}_constraint"
+#Maximum of students in each course changes depending on entry in constraints table in DB
+for number_students_course in range(cols):
+    number_students_course = LpConstraint(
+        e=lpSum(X[i][number_students_course] for i in range(rows)),
+        sense=LpConstraintLE,
+        name=f'studentsper{number_students_course}',
+        rhs=numberofstudents)
+    prob += number_students_course
 
-#every student needs to have 2 courses
-for j in range(cols):
-    prob += lpSum(X[i][j] for i in range(rows)) <= 2, f"Coulumn_{j+1}_constraint"
+
+
+#two courses per Student
+for courses_student in range(rows):
+    courses_student = LpConstraint(
+        e=lpSum(X[courses_student][y] for y in range(cols)),
+        sense=LpConstraintEQ,
+        name=f'twocourses{courses_student}',
+        rhs=2)
+    prob += courses_student
+
 
 # Solve the problem
 prob.solve()
