@@ -18,53 +18,90 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
     //this code section modifies the function to set a max. number of students for a course.
     //When submit button is pressed write into database
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if ($mysqli->connect_error) {
-            die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
-        }
-        //information that needs to be saved in DB
-        $wbünumber = $_POST["wbünumber"];
-        //define the name of constraint
-        $postname = "wbünumber";
-        // Check if the variable already exists in the table
-        $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
-        $checkStmt = $mysqli->prepare($checkQuery);
-        $checkStmt->bind_param("s", $postname);
-        $checkStmt->execute();
-        $checkResult = $checkStmt->get_result();
+       //actions if button named submit is pressed
+      if(isset($_POST['submit'])){
+          if ($mysqli->connect_error) {
+              die("Verbindung zur Datenbank fehlgeschlagen: " . $mysqli->connect_error);
+          }
+          //information that needs to be saved in DB
+          $wbünumber = $_POST["wbünumber"];
+          //define the name of constraint
+          $postname = "wbünumber";
+          // Check if the variable already exists in the table
+          $checkQuery = "SELECT * FROM `Constraints` WHERE Name = ?";
+          $checkStmt = $mysqli->prepare($checkQuery);
+          $checkStmt->bind_param("s", $postname);
+          $checkStmt->execute();
+          $checkResult = $checkStmt->get_result();
 
-        if ($checkResult->num_rows > 0) {
-            // Update existing record if the username already exists
-            $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
-            $updateStmt = $mysqli->prepare($updateQuery);
-            $updateStmt->bind_param("ss", $wbünumber,  $postname);
-            //Display conformation statement
-            if ($updateStmt->execute()) {
-                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
-            } else {
-                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
-            }
-            $updateStmt->close();
-        } else {
-            // Insert a new record if the username doesn't exist
-            $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
-            $insertStmt = $mysqli->prepare($insertQuery);
-            $insertStmt->bind_param("ss", $postname, $wbünumber);
-            //display conformation statement
-            if ($insertStmt->execute()) {
-                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Die Nebenbedingung wurde übergeben" . "</p>";
-            } else {
-                echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
-                    . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
-            }
+          if ($checkResult->num_rows > 0) {
+              // Update existing record if the username already exists
+              $updateQuery = "UPDATE `Constraints` SET Value=? WHERE name=?";
+              $updateStmt = $mysqli->prepare($updateQuery);
+              $updateStmt->bind_param("ss", $wbünumber,  $postname);
+              //Display conformation statement
+              if ($updateStmt->execute()) {
+                  echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                      . "Deine Eingabe wurde erfolgreich aktualisiert" . "</p>";
+              } else {
+                  echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                      . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+              }
+              $updateStmt->close();
+          } else {
+              // Insert a new record if the username doesn't exist
+              $insertQuery = "INSERT INTO `Constraints` (Name, Value) VALUES (?, ?)";
+              $insertStmt = $mysqli->prepare($insertQuery);
+              $insertStmt->bind_param("ss", $postname, $wbünumber);
+              //display conformation statement
+              if ($insertStmt->execute()) {
+                  echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                      . "Die Nebenbedingung wurde übergeben" . "</p>";
+              } else {
+                  echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                      . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+              }
 
-            $insertStmt->close();
-        }
+              $insertStmt->close();
+          }
+      }
+       //action if button named delete is pressed
+      if(isset($_POST["delete"])){
+          $deletequery_output = "DELETE FROM `WBÜ_Output`";
+          $deletequery_transform = "DELETE FROM `WBÜ_zwischentabelle`";
+          if ($mysqli->query($deletequery_output) === true) {
+              echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                  . "Die Daten wurden erfolgreich aus der Output-Tabelle gelöscht." . "</p>";
+          } else {
+              echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                  . "Fehler beim Löschen in der Datenbank - Tabelle: WBÜ_Output" . "</p>" . $mysqli->error;
+          }
+            //part for the transform table
+          if ($mysqli->query($deletequery_transform) === true) {
+              echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                  . "Die Daten wurden erfolgreich aus der Transform-Tabelle gelöscht." . "</p>";
+          } else {
+              echo "<p style='text-align: center; margin-top: 4%; font-weight: bolder'>"
+                  . "Fehler beim Löschen in der Datenbank - Tabelle: WBÜ_zwischentabelle" . "</p>" . $mysqli->error;
+          }
+      }
 
     }
     ?>
+    <!-- You can choose how many students can be in one Course after seeing amount of votes -->
+    <div class="homepage_optioncontainer" style="margin-top: 3%">
+        <div class="distribution_activator">
+            <h5> Mit diesem Button wird die Input Tabelle geleert - Dies macht den Beginn einer neuen Wahlperiode aus  </h5>
+            Mit dem Button werden die Daten aus der WBÜ_Output Tabelle und aus der WBÜ_zwischentabelle gelöscht. <br>
+            Wenn der Datenstand in der WBÜ_Input gleich geblieben ist, können diese Daten reproduziert werden. <br>
+            Bei einer Änderung in der WBÜ_Input Tabelle kann es zu Abweichungen kommen.
+            <div style="margin-top: 5%;">
+                <form method="post">
+                    <input type="submit" name="delete" value="Achtung: Es werden mit dem Klick Daten gelöscht." class="btn btn-dark" style="background-color: #590319;">
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Div with button to start the WBÜ distribution. At the moment the button does not work yet. The python script must be started manually.  -->
     <div class="homepage_optioncontainer" style="margin-top: 2%;">
         <div class="distribution_activator">
@@ -129,7 +166,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                 <form method="post">
                     <label for="number">Maximal-Anzahl der Studenten pro WBÜ-Kurs:</label>
                     <input type="number" id="wbünumber" name="wbünumber" required min="1" placeholder="min. 1 Person"> <!--min gibt kleinste Zahl an. -->
-                    <input type="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
+                    <input type="submit" name="submit" value="Submit" class="btn btn-dark" style="background-color: #032d57;">
                 </form>
             </div>
         </div>
