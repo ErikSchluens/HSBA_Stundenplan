@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Erstellungszeit: 27. Nov 2023 um 10:09
+-- Erstellungszeit: 27. Nov 2023 um 10:43
 -- Server-Version: 5.7.39
 -- PHP-Version: 8.2.0
 
@@ -114,31 +114,13 @@ CREATE TABLE `Excursion_Output` (
 CREATE TABLE `Excursion_Zwischentabelle` (
   `ExcursionInput_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `Excursion_id` int(11) NOT NULL
+  `Hamburg` int(11) NOT NULL,
+  `Lissabon` int(11) NOT NULL,
+  `Athen` int(11) NOT NULL,
+  `Bilbao` int(11) NOT NULL,
+  `Bordeaux` int(11) NOT NULL,
+  `Limassol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `Excusiondestinations`
---
-
-CREATE TABLE `Excusiondestinations` (
-  `Excursion_id` int(11) NOT NULL,
-  `Destination` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `Excusiondestinations`
---
-
-INSERT INTO `Excusiondestinations` (`Excursion_id`, `Destination`) VALUES
-(1, 'Hamburg'),
-(2, 'Lissabon'),
-(3, 'Athen'),
-(4, 'Bilbao'),
-(5, 'Bordeaux'),
-(6, 'Limassol');
 
 -- --------------------------------------------------------
 
@@ -545,28 +527,6 @@ CREATE TABLE `Timetable` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `WBÜs`
---
-
-CREATE TABLE `WBÜs` (
-  `WBÜ_id` int(11) NOT NULL,
-  `WBÜ_name` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `WBÜs`
---
-
-INSERT INTO `WBÜs` (`WBÜ_id`, `WBÜ_name`) VALUES
-(1, 'Spanisch'),
-(2, 'Communication'),
-(3, 'Verhandlungsführung'),
-(4, 'Selfempowerment'),
-(5, 'Presentation_Skills');
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `WBÜ_Input`
 --
 
@@ -600,7 +560,11 @@ CREATE TABLE `WBÜ_Output` (
 CREATE TABLE `WBÜ_zwischentabelle` (
   `WBÜInput_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `WBÜ_id` int(11) NOT NULL
+  `Spanisch` int(11) NOT NULL,
+  `Communication` int(11) NOT NULL,
+  `Verhandlungsführung` int(11) NOT NULL,
+  `Selfempowerment` int(11) NOT NULL,
+  `presentation_skills` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -637,8 +601,7 @@ ALTER TABLE `Excursion_Input`
 --
 ALTER TABLE `Excursion_Zwischentabelle`
   ADD KEY `Foreign 14` (`ExcursionInput_id`),
-  ADD KEY `Foreign 15` (`user_id`),
-  ADD KEY `Foreign 16` (`Excursion_id`);
+  ADD KEY `Foreign 15` (`user_id`);
 
 --
 -- Indizes für die Tabelle `Excusiondestinations`
@@ -718,12 +681,6 @@ ALTER TABLE `Timetable`
   ADD KEY `Foreign 15` (`studyprogram_id`);
 
 --
--- Indizes für die Tabelle `WBÜs`
---
-ALTER TABLE `WBÜs`
-  ADD PRIMARY KEY (`WBÜ_id`);
-
---
 -- Indizes für die Tabelle `WBÜ_Input`
 --
 ALTER TABLE `WBÜ_Input`
@@ -734,7 +691,6 @@ ALTER TABLE `WBÜ_Input`
 -- Indizes für die Tabelle `WBÜ_zwischentabelle`
 --
 ALTER TABLE `WBÜ_zwischentabelle`
-  ADD KEY `Foreign 12` (`WBÜ_id`) USING BTREE,
   ADD KEY `Foreign 10` (`WBÜInput_id`),
   ADD KEY `Foreign 11` (`user_id`);
 
@@ -765,12 +721,6 @@ ALTER TABLE `Courses`
 --
 ALTER TABLE `Excursion_Input`
   MODIFY `ExcursionInput_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT für Tabelle `Excusiondestinations`
---
-ALTER TABLE `Excusiondestinations`
-  MODIFY `Excursion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `Lecturers`
@@ -809,12 +759,6 @@ ALTER TABLE `Timetable`
   MODIFY `timetable_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `WBÜs`
---
-ALTER TABLE `WBÜs`
-  MODIFY `WBÜ_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT für Tabelle `WBÜ_Input`
 --
 ALTER TABLE `WBÜ_Input`
@@ -835,8 +779,7 @@ ALTER TABLE `Excursion_Input`
 --
 ALTER TABLE `Excursion_Zwischentabelle`
   ADD CONSTRAINT `Foreign 14` FOREIGN KEY (`ExcursionInput_id`) REFERENCES `Excursion_Input` (`ExcursionInput_id`),
-  ADD CONSTRAINT `Foreign 15` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`),
-  ADD CONSTRAINT `Foreign 16` FOREIGN KEY (`Excursion_id`) REFERENCES `Excusiondestinations` (`Excursion_id`);
+  ADD CONSTRAINT `Foreign 15` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`);
 
 --
 -- Constraints der Tabelle `LecturerXCourses`
@@ -877,8 +820,7 @@ ALTER TABLE `WBÜ_Input`
 --
 ALTER TABLE `WBÜ_zwischentabelle`
   ADD CONSTRAINT `Foreign 10` FOREIGN KEY (`WBÜInput_id`) REFERENCES `WBÜ_Input` (`WBÜInput_id`),
-  ADD CONSTRAINT `Foreign 11` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`),
-  ADD CONSTRAINT `Foreign 12` FOREIGN KEY (`WBÜ_id`) REFERENCES `WBÜs` (`WBÜ_id`);
+  ADD CONSTRAINT `Foreign 11` FOREIGN KEY (`user_id`) REFERENCES `LogIn` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
