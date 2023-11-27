@@ -604,12 +604,6 @@ ALTER TABLE `Excursion_Zwischentabelle`
   ADD KEY `Foreign 15` (`user_id`);
 
 --
--- Indizes für die Tabelle `Excusiondestinations`
---
-ALTER TABLE `Excusiondestinations`
-  ADD PRIMARY KEY (`Excursion_id`);
-
---
 -- Indizes für die Tabelle `Lecturers`
 --
 ALTER TABLE `Lecturers`
