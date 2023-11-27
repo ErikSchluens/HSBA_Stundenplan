@@ -29,19 +29,7 @@ if ($_SESSION['user_id'] ==null ) {
         }
     </style>
 <?php
-// Connection to our database is established, If it fails we get a error message
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $db_host = '127.0.0.1';
-    $db_user = 'root';
-    $db_password = 'root';
-    $db_db = 'Stundenplan';
-    $db_port = 8889;
-
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-    if ($conn->connect_error) {
-        die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
-    }
 
     $dropdown1 = $_POST["dropdown1"];
     $dropdown2 = $_POST["dropdown2"];
@@ -51,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if the username already exists in the table
     $checkQuery = "SELECT * FROM Excursion_Input WHERE username = ?";
-    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt = $mysqli->prepare($checkQuery);
     $checkStmt->bind_param("s", $username);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
@@ -59,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkResult->num_rows > 0) {
         // Update existing record if the username already exists
         $updateQuery = "UPDATE Excursion_Input SET 1wahl=?, 2wahl=?, 3wahl=?, 4wahl=?, 5wahl=? WHERE username=?";
-        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt = $mysqli->prepare($updateQuery);
         $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $username);
 
         if ($updateStmt->execute()) {
@@ -72,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Insert a new record if the username doesn't exist
         $insertQuery = "INSERT INTO Excursion_Input (username, 1wahl, 2wahl, 3wahl, 4wahl, 5wahl) VALUES (?, ?, ?, ?, ?, ?)";
-        $insertStmt = $conn->prepare($insertQuery);
+        $insertStmt = $mysqli->prepare($insertQuery);
         $insertStmt->bind_param("ssssss", $username, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
 
         if ($insertStmt->execute()) {
@@ -87,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-    <title>Exkursion</title>
+    <title>Exkursion</title>^
 
     <!-- Begin of the website, where the specific user is adressed -->
     <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
