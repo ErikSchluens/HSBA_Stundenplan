@@ -31,19 +31,8 @@ if ($_SESSION['user_id'] ==null ) {
 </style>
 
 <?php
-// Connection to our database is established, If it fails we get a error message
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $db_host = '127.0.0.1';
-    $db_user = 'root';
-    $db_password = 'root';
-    $db_db = 'Stundenplan';
-    $db_port = 8889;
 
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
-
-    if ($conn->connect_error) {
-        die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
-    }
     // Right here I give every dropdown a variable, so I can use them in SQL Statement to insert Data in the Database
     $dropdown1 = $_POST["dropdown1"];
     $dropdown2 = $_POST["dropdown2"];
@@ -53,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if the username already exists in the table
     $checkQuery = "SELECT * FROM WBÜ_Input WHERE username = ?";
-    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt = $mysqli->prepare($checkQuery);
     $checkStmt->bind_param("s", $username);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
@@ -61,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkResult->num_rows > 0) {
         // Update existing record if the username already exists
         $updateQuery = "UPDATE WBÜ_Input SET wahl1=?, wahl2=?, wahl3=?, wahl4=?, wahl5=? WHERE username=?";
-        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt = $mysqli->prepare($updateQuery);
         $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $username);
 
         if ($updateStmt->execute()) {
@@ -74,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Insert a new record if the username doesn't exist
         $insertQuery = "INSERT INTO WBÜ_Input (username, wahl1, wahl2, wahl3, wahl4, wahl5) VALUES (?, ?, ?, ?, ?, ?)";
-        $insertStmt = $conn->prepare($insertQuery);
+        $insertStmt = $mysqli->prepare($insertQuery);
         $insertStmt->bind_param("ssssss", $username, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
 
         if ($insertStmt->execute()) {
