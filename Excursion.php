@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-    <title>Exkursion</title>^
+    <title>Exkursion</title>
 
     <!-- Begin of the website, where the specific user is adressed -->
     <h2 style="margin: 0.5%">Bitte wähle deine Exkursion, <?php echo $username ?></h2>
