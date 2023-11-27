@@ -49,7 +49,8 @@ INSERT INTO `Administration` (`admin_id`, `firstname`, `lastname`) VALUES
 
 CREATE TABLE `Constraints` (
   `Name` varchar(255) NOT NULL,
-  `Value` varchar(255) NOT NULL
+  `Value` varchar(255) NOT NULL,
+  `Constraint_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -613,6 +614,12 @@ ALTER TABLE `Administration`
   ADD PRIMARY KEY (`admin_id`);
 
 --
+-- Indizes für die Tabelle `Constraints`
+--
+ALTER TABLE `Constraints`
+  ADD PRIMARY KEY (`Constraint_id`);
+
+--
 -- Indizes für die Tabelle `Courses`
 --
 ALTER TABLE `Courses`
@@ -740,6 +747,12 @@ ALTER TABLE `WBÜ_zwischentabelle`
 --
 ALTER TABLE `Administration`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT für Tabelle `Constraints`
+--
+ALTER TABLE `Constraints`
+  MODIFY `Constraint_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `Courses`
