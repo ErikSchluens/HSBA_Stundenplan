@@ -7,7 +7,7 @@ config = {
   'password': 'root',
   'host': 'localhost',
   'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-  'database': 'timetableknowledge',
+  'database': 'TimeTableKnowledge_v.0.2',
   'raise_on_warnings': True
 }
 
@@ -37,7 +37,7 @@ for row in data_from_db:
     print(row)
 
 #transform data into a list - muss das sein? Kann ich nicht auch direkt das dictionary nehmen?
-results = [[row['num'], row['username'], row['Spanisch'], row['kommunikation'], row['Verhandlungsführung'],
+results = [[row['WBÜInput_id'], row['user_id'], row['Spanisch'], row['Communication'], row['Verhandlungsführung'],
             row['Selfempowerment'], row['presentation_skills']] for row in data_from_db]
 
 results_dict = {index: row[0] for index, row in enumerate(results)}

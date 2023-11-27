@@ -17,15 +17,15 @@ if ($_SESSION['user_id'] == null) {
                 <?php
                 //from here the results for the WBÜs are retrieved the same way like the ones for the excursion
                 //define an indexed array for the courses
-                $courses = array("_1"=>"Spanisch", "_2"=>"Kommunikation", "_3" =>"Verhandlungsführung", "_4"=>"Selfempowerment" ,
-                    "_5"=>"Presentation_Skills",);
+                $courses = array("_1"=>"Spanisch", "_2"=>"Communication", "_3" =>"Verhandlungsführung", "_4"=>"Selfempowerment" ,
+                    "_5"=>"Presentation Skills",);
 
-                $courses_stmt = $mysqli->prepare("SELECT * FROM WBÜ_Input WHERE username = ?");
-                $courses_stmt ->bind_param("s", $username);
+                $courses_stmt = $mysqli->prepare("SELECT * FROM WBÜ_Input WHERE user_id = ?");
+                $courses_stmt ->bind_param("s", $user_id);
                 $courses_stmt ->execute();
                 $courses_input_result = $courses_stmt ->get_result()->fetch_assoc();
                 //save the user num to use it in later sql queries
-                $user_num_courses = $courses_input_result["num"];
+                $user_num_courses = $courses_input_result["WBÜInput_id"];
                 // concat the user number to X_. we need that in the next sql query
                 $variable_num_courses = "X_".$user_num_courses;
                 //get only Data where the Variable name matches and the value is one meaning that this is the course one will have
@@ -62,15 +62,14 @@ if ($_SESSION['user_id'] == null) {
                     "_6"=>"Limasol");
 
                 //get the id number from the input table
-                $stmt = $mysqli->prepare("SELECT * FROM Excursion_Input WHERE username = ?");
-                $stmt ->bind_param("s", $username);
+                $stmt = $mysqli->prepare("SELECT * FROM Excursion_Input WHERE user_id = ?");
+                $stmt ->bind_param("s", $user_id);
                 $stmt ->execute();
                 $excursion_input_result = $stmt ->get_result()->fetch_assoc();
                 //save the user num to use it in later sql queries
-                $user_num_excursion = $excursion_input_result["num"];
+                $user_num_excursion = $excursion_input_result["ExcursionInput_id"];
                 // concat the user number to X_. we need that in the next sql query
                 $variable_num_excursion = "X_".$user_num_excursion;
-
                 //get only Data where the Variable name matches and the value is one meaning that this is the excoursion one will have
                 $Valuestmt = $mysqli->prepare("SELECT * FROM `Excursion_Output` WHERE
                                          SUBSTRING_INDEX(variable, '_', 2)= ? AND wert = 1.0");

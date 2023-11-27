@@ -7,7 +7,7 @@ config = {
   'password': 'root',
   'host': 'localhost',
   'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-  'database': 'timetableknowledge',
+  'database': 'TimeTableKnowledge_v.0.2',
   'raise_on_warnings': True
 }
 
@@ -39,7 +39,7 @@ for row in data_from_db:
 
 
 #transform data into a list
-results = [[row['num'], row['username'], row['Hamburg'], row['Lissabon'], row['Athen'],
+results = [[row['ExcursionInput_id'], row['user_id'], row['Hamburg'], row['Lissabon'], row['Athen'],
             row['Bilbao'], row['Bordeaux'] , row['Limassol']] for row in data_from_db]
 
 results_dict = {index: row[0] for index, row in enumerate(results)}

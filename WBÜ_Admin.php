@@ -117,7 +117,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                     Spanisch
                 </td>
                 <td class="table_cell">
-                    Kommunikation
+                    Communication
                 </td>
                 <td class="table_cell">
                     Verhandlungsführung
@@ -132,7 +132,8 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
             <!-- A table row is output for each existing choice stored in the database -->
             <?php
             // SQL query to pull the data from the table in which the election results are stored (WBÜ-zwischentabelle).
-            $dataQuery = "SELECT * FROM WBÜ_zwischentabelle";
+            $dataQuery = "SELECT username, Spanisch, Communication, Verhandlungsführung,Selfempowerment, presentation_skills 
+                            FROM WBÜ_zwischentabelle LEFT JOIN LogIn on WBÜ_zwischentabelle.user_id = LogIn.user_id";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>
@@ -140,7 +141,7 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
                 <tr>
                     <td class="table_cell"><?=$row['username']?></td>
                     <td class="table_cell"><?=$row['Spanisch']?></td>
-                    <td class="table_cell"><?=$row['kommunikation']?></td>
+                    <td class="table_cell"><?=$row['Communication']?></td>
                     <td class="table_cell"><?=$row['Verhandlungsführung']?></td>
                     <td class="table_cell"><?=$row['Selfempowerment']?></td>
                     <td class="table_cell"><?=$row['presentation_skills']?></td>

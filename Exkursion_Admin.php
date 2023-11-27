@@ -134,7 +134,8 @@ if ($_SESSION['user_id'] >=24 || in_array($_SESSION['user_id'], $forbiddenrange)
             <!-- A table row is output for each existing choice stored in the database -->
             <?php
             // SQL query to pull the data from the table in which the election results are stored (Excursion-Zwischentabelle).
-            $dataQuery = "SELECT * FROM Excursion_Zwischentabelle";
+            $dataQuery = "SELECT username, Hamburg, Lissabon, Athen, Bilbao, Bordeaux, Limassol 
+                    FROM Excursion_Zwischentabelle LEFT JOIN LogIn on Excursion_Zwischentabelle.user_id = LogIn.user_id";
             $dataResult = $mysqli->query($dataQuery);
             foreach($dataResult as $row) {
                 ?>

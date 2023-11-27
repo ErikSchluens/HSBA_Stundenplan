@@ -5,7 +5,7 @@ config = {
   'password': 'root',
   'host': 'localhost',
   'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-  'database': 'timetableknowledge',
+  'database': 'TimeTableKnowledge_v.0.2',
   'raise_on_warnings': True
 }
 
@@ -28,12 +28,12 @@ results = cursor.fetchall()
 
 # Insert data into the new table
 for row in results:
-    num = row['num']
-    username = row['username']
+    WBÜInput_id = row['WBÜInput_id']
+    user_id = row['user_id']
 
     # Initialize variables with default values of 10 to make non chosen courses very unatractive in the optimization
     spanisch = 10
-    kommunikation = 10
+    communication = 10
     verhandlungsführung = 10
     selfempowerment = 10
     presentation_skills = 10
@@ -55,9 +55,9 @@ for row in results:
     #execute a query which inserts the values into the database
     cursor.execute('''
         INSERT INTO WBÜ_zwischentabelle (
-            num, username, spanisch, kommunikation, verhandlungsführung, selfempowerment, presentation_skills
+            WBÜInput_id, user_id, spanisch, communication, verhandlungsführung, selfempowerment, presentation_skills
         ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-    ''', (num, username, spanisch, kommunikation, verhandlungsführung, selfempowerment, presentation_skills))
+    ''', (WBÜInput_id, user_id, spanisch, communication, verhandlungsführung, selfempowerment, presentation_skills))
 
 # Commit the changes and close the connection
 cnx.commit()

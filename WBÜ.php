@@ -41,17 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dropdown5 = $_POST["dropdown5"];
 
     // Check if the username already exists in the table
-    $checkQuery = "SELECT * FROM WBÜ_Input WHERE username = ?";
+    $checkQuery = "SELECT * FROM WBÜ_Input WHERE user_id = ?";
     $checkStmt = $mysqli->prepare($checkQuery);
-    $checkStmt->bind_param("s", $username);
+    $checkStmt->bind_param("s", $user_id);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
 
     if ($checkResult->num_rows > 0) {
         // Update existing record if the username already exists
-        $updateQuery = "UPDATE WBÜ_Input SET wahl1=?, wahl2=?, wahl3=?, wahl4=?, wahl5=? WHERE username=?";
+        $updateQuery = "UPDATE WBÜ_Input SET wahl1=?, wahl2=?, wahl3=?, wahl4=?, wahl5=? WHERE user_id=?";
         $updateStmt = $mysqli->prepare($updateQuery);
-        $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $username);
+        $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $user_id);
 
         if ($updateStmt->execute()) {
             echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Deine Wahl wurde erfolgreich aktualisiert" . "</p>";
@@ -62,9 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateStmt->close();
     } else {
         // Insert a new record if the username doesn't exist
-        $insertQuery = "INSERT INTO WBÜ_Input (username, wahl1, wahl2, wahl3, wahl4, wahl5) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertQuery = "INSERT INTO WBÜ_Input (user_id, wahl1, wahl2, wahl3, wahl4, wahl5) VALUES (?, ?, ?, ?, ?, ?)";
         $insertStmt = $mysqli->prepare($insertQuery);
-        $insertStmt->bind_param("ssssss", $username, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
+        $insertStmt->bind_param("ssssss", $user_id, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
 
         if ($insertStmt->execute()) {
             echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Danke für deine Wahl" . "</p>";

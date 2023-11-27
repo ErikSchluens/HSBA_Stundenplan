@@ -3,7 +3,7 @@
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'TimeTableknowledge'; // If the name of your database in phpMyAdmin differs from this please adjust the name to access the database.
+$db_db = 'TimeTableKnowledge_v.0.2'; // If the name of your database in phpMyAdmin differs from this please adjust the name to access the database.
 $db_port = 8889;
 
 $mysqli = new mysqli($db_host, $db_user, $db_password, $db_db, $db_port);
@@ -41,7 +41,7 @@ $user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : null;
         });
     </script>
     <script> // Every Single dropdown is scripted, when to show and when to hide. Through the If-else function
-            // the Dropdowns show and hide depending on the selection in the Dropdown before
+        // the Dropdowns show and hide depending on the selection in the Dropdown before
         $(document).ready(function(){
             $('#dropdown2').hide();
             $('#dropdown3').hide();
