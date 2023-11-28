@@ -9,7 +9,7 @@ if ($_SESSION['user_id'] ==null ) {
 <!-- This is where the body of the page begins. -->
 <div class="body_box">
     <!-- The user is welcomed on the Homepage. -->
-    <div style="height: 5%">
+    <div style="height: 150px;">
         <div><img src='User.png' alt='Userimage' style='width:50px;height:50px; margin: 0.8%;'></div>
         <div style="margin-left: 6%; margin-top: -3.7%"><h2>Willkommen, <?php echo $username ?></h2></div>
     </div>

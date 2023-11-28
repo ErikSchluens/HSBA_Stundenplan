@@ -11,7 +11,6 @@
 /* This styles a container div to align the divs inside horizontally on the website.*/
 .homepage_optioncontainer {
     height: fit-content;
-    min-height: 500px;
     display: flex;
     justify-content: space-around;
     align-items: center;

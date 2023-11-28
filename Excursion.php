@@ -51,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateStmt->bind_param("ssssss", $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5, $user_id);
 
         if ($updateStmt->execute()) {
-            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Deine Wahl wurde erfolgreich aktualisiert" . "</p>";
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 15%;'>" . "Deine Wahl wurde erfolgreich aktualisiert!" . "</p>";
         } else {
-            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>"
-                . "Fehler beim Einfügen in die Datenbank" . "</p>" . $updateStmt->error;
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 15%;'>"
+                . "Fehler beim Einfügen in die Datenbank!" . "</p>" . $updateStmt->error;
         }
         $updateStmt->close();
     } else {
@@ -64,10 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertStmt->bind_param("ssssss", $user_id, $dropdown1, $dropdown2, $dropdown3, $dropdown4, $dropdown5);
 
         if ($insertStmt->execute()) {
-            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>" . "Danke für deine Wahl" . "</p>";
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 15%;'>" . "Danke für deine Wahl!" . "</p>";
         } else {
-            echo "<p style='position: absolute;margin-left: 43%;margin-top: 8%;'>"
-                . "Fehler beim Einfügen in die Datenbank" . "</p>" . $insertStmt->error;
+            echo "<p style='position: absolute;margin-left: 43%;margin-top: 15%;'>"
+                . "Fehler beim Einfügen in die Datenbank!" . "</p>" . $insertStmt->error;
         }
 
         $insertStmt->close();
